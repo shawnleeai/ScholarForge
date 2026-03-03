@@ -1,0 +1,60 @@
+.sider {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.06);
+  background: #fff !important;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding: 0 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.logoIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+  overflow: hidden;
+}
+
+.logoTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1890ff;
+  white-space: nowrap;
+}
+
+.logoSubtitle {
+  font-size: 12px;
+  color: #999;
+  white-space: nowrap;
+}
+
+.menu {
+  border-right: none !important;
+  padding: 8px;
+}
+
+.menu :global(.ant-menu-item) {
+  margin: 4px 0;
+  border-radius: 8px;
+  height: 40px;
+  line-height: 40px;
+}
+
+.menu :global(.ant-menu-item-selected) {
+  background: #e6f4ff !important;
+}

@@ -1,0 +1,131 @@
+.editorLayout {
+  height: calc(100vh - 64px - 48px);
+  background: #fff;
+  margin: -24px;
+}
+
+.sider {
+  border-right: 1px solid #f0f0f0;
+}
+
+.siderHeader {
+  padding: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.paperTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu {
+  border-right: none;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.toolbarLeft,
+.toolbarRight {
+  display: flex;
+  align-items: center;
+}
+
+.toolbarCenter {
+  flex: 1;
+  text-align: center;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.saving {
+  color: #1890ff;
+  font-size: 13px;
+}
+
+.unsaved {
+  color: #faad14;
+  font-size: 13px;
+}
+
+.saved {
+  color: #52c41a;
+  font-size: 13px;
+}
+
+.editorContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  overflow: hidden;
+}
+
+.editor {
+  flex: 1;
+  font-size: 16px;
+  line-height: 1.8;
+  border: none;
+  resize: none;
+  outline: none;
+}
+
+.editor:focus {
+  box-shadow: none;
+}
+
+.stats {
+  display: flex;
+  gap: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+  color: #999;
+  font-size: 13px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* 协作状态样式 */
+.collabStatus {
+  padding: 12px 16px;
+  background: #f6ffed;
+  border-bottom: 1px solid #b7eb8f;
+}
+
+.collabDrawer {
+  padding: 0;
+}
+
+.collabSection {
+  margin-bottom: 16px;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}

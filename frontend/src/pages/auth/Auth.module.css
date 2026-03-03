@@ -1,0 +1,56 @@
+.authForm {
+  width: 100%;
+  max-width: 400px;
+  padding: 24px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.header h2 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+
+.header p {
+  font-size: 14px;
+  color: #666;
+}
+
+.formOptions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forgotLink {
+  font-size: 14px;
+  color: #1890ff;
+}
+
+.forgotLink:hover {
+  color: #40a9ff;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.footer p {
+  font-size: 14px;
+  color: #666;
+}
+
+.link {
+  color: #1890ff;
+  font-weight: 500;
+}
+
+.link:hover {
+  color: #40a9ff;
+}

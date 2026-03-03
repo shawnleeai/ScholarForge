@@ -1,0 +1,78 @@
+/**
+ * 协作组件样式
+ */
+
+.userList {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.userAvatar {
+  border: 2px solid #fff;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.userAvatar:hover {
+  transform: translateY(-2px);
+  z-index: 10;
+}
+
+.moreAvatar {
+  background: #f0f0f0;
+  color: #666;
+  font-size: 12px;
+  border: 2px solid #fff;
+}
+
+.cursor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.cursorCaret {
+  width: 2px;
+  height: 1.2em;
+  background: currentColor;
+}
+
+.cursorLabel {
+  position: absolute;
+  top: -1.5em;
+  left: 0;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  color: #fff;
+}
+
+.collaborationStatus {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 13px;
+}
+
+.connected {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+.disconnected {
+  background: #fff2f0;
+  color: #ff4d4f;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}

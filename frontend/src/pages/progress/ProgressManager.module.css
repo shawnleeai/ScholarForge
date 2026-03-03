@@ -1,0 +1,72 @@
+.container {
+  padding: 24px;
+}
+
+.header {
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ganttContainer {
+  padding: 16px;
+}
+
+.ganttRow {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ganttLabel {
+  width: 200px;
+  flex-shrink: 0;
+  font-weight: 500;
+}
+
+.ganttBarContainer {
+  flex: 1;
+  padding: 0 16px;
+}
+
+.ganttBar {
+  height: 24px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  min-width: 40px;
+  transition: all 0.3s;
+}
+
+.ganttProgress {
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.ganttLegend {
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.milestoneItem {
+  padding: 8px;
+  background: #fafafa;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
+  }
+  
+  .ganttLabel {
+    width: 120px;
+    font-size: 12px;
+  }
+}

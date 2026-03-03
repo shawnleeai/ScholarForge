@@ -1,0 +1,16 @@
+-- ScholarForge 数据库初始化脚本
+-- Docker PostgreSQL 容器启动时自动执行
+
+-- 创建扩展
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pg_trgm";
+
+-- 授予应用程序用户权限
+GRANT ALL PRIVILEGES ON DATABASE scholarforge TO scholarforge;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO scholarforge;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO scholarforge;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO scholarforge;
+
+-- 设置默认权限
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO scholarforge;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO scholarforge;

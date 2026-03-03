@@ -1,0 +1,104 @@
+/* Comments Components Styles */
+
+.commentCard {
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  transition: all 0.2s;
+}
+
+.commentCard:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.commentCard.resolved {
+  background: #f6ffed;
+  border-color: #b7eb8f;
+  opacity: 0.8;
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.quoteText {
+  padding: 8px 12px;
+  background: #f5f5f5;
+  border-left: 3px solid #1890ff;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.commentContent {
+  margin-bottom: 8px;
+}
+
+.commentActions {
+  padding-top: 8px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.repliesList {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed #e8e8e8;
+}
+
+.replyItem {
+  padding: 8px 12px;
+  background: #fafafa;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.replyHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.replyInput {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.replyActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Sidebar */
+.tabs {
+  margin-bottom: 16px;
+}
+
+.tabs :global(.ant-tabs-nav) {
+  margin-bottom: 0;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.commentList {
+  padding: 0;
+}
+
+.commentItem {
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.commentItem:hover .commentCard {
+  border-color: #1890ff;
+}

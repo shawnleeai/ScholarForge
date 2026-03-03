@@ -1,0 +1,38 @@
+/* Export Components Styles */
+
+.statusContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 0;
+  gap: 16px;
+}
+
+.formatGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.formatOption {
+  flex: 1;
+  min-width: 120px;
+  height: auto !important;
+  padding: 12px !important;
+  text-align: center;
+}
+
+.formatContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.formatIcon {
+  font-size: 24px;
+}
+
+.formatLabel {
+  font-size: 12px;
+}

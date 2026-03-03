@@ -1,0 +1,105 @@
+/* AI Components Shared Styles */
+
+/* Reference Suggestions */
+.referenceSuggestions {
+  padding: 16px;
+}
+
+.inputSection {
+  margin-bottom: 16px;
+}
+
+.textInput {
+  margin-bottom: 12px;
+}
+
+.searchButton {
+  width: 100%;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.suggestionList {
+  margin-top: 16px;
+}
+
+.suggestionItem {
+  border-bottom: none !important;
+  padding: 8px 0 !important;
+}
+
+.suggestionCard {
+  width: 100%;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.suggestionCard .title {
+  max-width: 280px;
+  display: block;
+}
+
+/* Summary Panel */
+.summaryPanel {
+  padding: 16px;
+}
+
+.header {
+  margin-bottom: 16px;
+}
+
+.options {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.summaryCard {
+  background: #f6ffed;
+  border-color: #b7eb8f;
+}
+
+.summaryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.keywordsSection {
+  margin-top: 16px;
+  padding: 12px;
+  background: #e6f7ff;
+  border-radius: 8px;
+}
+
+.mainPointsSection {
+  margin-top: 16px;
+}
+
+.mainPointItem {
+  padding: 8px 0 !important;
+  border-bottom: none !important;
+  display: flex;
+  align-items: flex-start;
+}
+
+.resultSection {
+  margin-top: 24px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+/* Common */
+.empty {
+  padding: 40px;
+  text-align: center;
+  color: #999;
+}

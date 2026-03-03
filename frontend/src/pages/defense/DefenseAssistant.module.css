@@ -1,0 +1,121 @@
+.container {
+  padding: 24px;
+}
+
+.progressCard {
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, #fff7e6 0%, #fff1f0 100%);
+}
+
+.progressCircle {
+  text-align: center;
+  padding: 16px;
+  border-right: 1px solid #f0f0f0;
+}
+
+.checklistCard {
+  min-height: 400px;
+}
+
+.completedItem {
+  background: #f6ffed;
+  opacity: 0.7;
+}
+
+.emptyCard {
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.generateCard {
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pptHeader {
+  margin-bottom: 24px;
+}
+
+.pptTimeline {
+  min-height: 400px;
+}
+
+.slideCard {
+  margin-bottom: 8px;
+  background: #fafafa;
+}
+
+.slideCard:hover {
+  background: #f0f5ff;
+}
+
+.qaHeader {
+  margin-bottom: 24px;
+}
+
+.qaList {
+  min-height: 400px;
+}
+
+.qaCard {
+  width: 100%;
+}
+
+.answerBlock {
+  background: #f6ffed;
+  padding: 16px;
+  border-radius: 8px;
+  border-left: 4px solid #52c41a;
+}
+
+.mockStartCard {
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mockSession {
+  min-height: 500px;
+}
+
+.mockProgress {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.mockQuestion {
+  margin-bottom: 24px;
+}
+
+.questionCard {
+  background: #e6f7ff;
+  border: 1px solid #91d5ff;
+}
+
+.mockAnswer {
+  margin-bottom: 24px;
+}
+
+.mockActions {
+  text-align: center;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
+  }
+
+  .progressCircle {
+    border-right: none;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 16px;
+  }
+}

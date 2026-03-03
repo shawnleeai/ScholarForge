@@ -1,0 +1,63 @@
+.container {
+  padding: 24px;
+}
+
+.header {
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inputCard {
+  background: #fafafa;
+}
+
+.topicCard {
+  transition: all 0.3s;
+  border: 1px solid #f0f0f0;
+}
+
+.topicCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #1890ff;
+}
+
+.gapList {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.gapList li {
+  margin: 4px 0;
+}
+
+.ganttPreview {
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.ganttBar {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  padding: 8px;
+  background: white;
+  border-radius: 4px;
+}
+
+.ganttLabel {
+  width: 150px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
+  }
+  
+  .ganttLabel {
+    width: 100px;
+  }
+}

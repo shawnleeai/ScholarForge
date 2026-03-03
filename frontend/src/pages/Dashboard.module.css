@@ -1,0 +1,96 @@
+.dashboard {
+  padding: 0;
+}
+
+.welcome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 24px;
+  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+  border-radius: 12px;
+  color: white;
+}
+
+.welcome h3 {
+  color: white !important;
+}
+
+.welcome span {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.statsRow {
+  margin-bottom: 24px;
+}
+
+.statCard {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.statCard :global(.ant-card-body) {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.statIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contentCard {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.listItem {
+  cursor: pointer;
+  padding: 16px 0;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.listItem:hover {
+  background: #f5f5f5;
+}
+
+.paperIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #e6f7ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1890ff;
+  font-size: 20px;
+}
+
+.progressItem {
+  margin-bottom: 20px;
+}
+
+.progressItem:last-child {
+  margin-bottom: 0;
+}
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .welcome {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+}

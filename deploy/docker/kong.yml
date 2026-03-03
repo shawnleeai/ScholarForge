@@ -1,0 +1,82 @@
+_format_version: "3.0"
+
+services:
+  - name: user-service
+    url: http://user-service:8000
+    routes:
+      - name: user-routes
+        paths:
+          - /api/users
+          - /api/auth
+    plugins:
+      - name: jwt
+      - name: rate-limiting
+        config:
+          minute: 100
+          policy: local
+
+  - name: paper-service
+    url: http://paper-service:8000
+    routes:
+      - name: paper-routes
+        paths:
+          - /api/papers
+    plugins:
+      - name: jwt
+      - name: rate-limiting
+        config:
+          minute: 200
+          policy: local
+
+  - name: article-service
+    url: http://article-service:8000
+    routes:
+      - name: article-routes
+        paths:
+          - /api/articles
+          - /api/literature
+    plugins:
+      - name: jwt
+      - name: rate-limiting
+        config:
+          minute: 100
+          policy: local
+
+  - name: ai-service
+    url: http://ai-service:8000
+    routes:
+      - name: ai-routes
+        paths:
+          - /api/ai
+    plugins:
+      - name: jwt
+      - name: rate-limiting
+        config:
+          minute: 50
+          policy: local
+      - name: request-size-limiting
+        config:
+          allowed_payload_size: 10
+
+  - name: collab-service
+    url: http://collab-service:8000
+    routes:
+      - name: collab-routes
+        paths:
+          - /api/collab
+    plugins:
+      - name: jwt
+
+  - name: recommend-service
+    url: http://recommend-service:8000
+    routes:
+      - name: recommend-routes
+        paths:
+          - /api/recommendations
+          - /api/knowledge-graph
+    plugins:
+      - name: jwt
+      - name: rate-limiting
+        config:
+          minute: 100
+          policy: local

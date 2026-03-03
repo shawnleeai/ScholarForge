@@ -1,0 +1,131 @@
+/* Quality Assurance Components Styles */
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.headerCard {
+  margin-bottom: 16px;
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkingCard {
+  margin-bottom: 16px;
+}
+
+.checkingContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 0;
+  gap: 16px;
+}
+
+.resultCard {
+  margin-bottom: 16px;
+}
+
+.scoreCircle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scoreText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scoreValue {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.scoreLabel {
+  font-size: 14px;
+  color: #666;
+}
+
+.scoreDisplay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.detailCard,
+.suggestionCard,
+.issuesCard,
+.passedCard {
+  margin-bottom: 16px;
+}
+
+.matchItem,
+.issueItem {
+  padding: 12px !important;
+  background: #fafafa;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.matchContent,
+.issueContent {
+  width: 100%;
+}
+
+.matchHeader,
+.issueHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.matchText {
+  margin-bottom: 8px;
+  padding: 8px;
+  background: #fffbe6;
+  border-radius: 4px;
+}
+
+.issueMessage {
+  margin-bottom: 8px;
+}
+
+.issueSuggestion {
+  padding: 8px;
+  background: #e6f7ff;
+  border-radius: 4px;
+}
+
+.optionsForm {
+  padding: 16px 0;
+}
+
+.optionGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+/* Plagiarism Checker Specific */
+.plagiarismChecker,
+.formatChecker {
+  padding: 0;
+}

@@ -1,0 +1,170 @@
+.library {
+  padding: 0;
+}
+
+.folderCard {
+  border-radius: 12px;
+  position: sticky;
+  top: 24px;
+}
+
+.folderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.folderHeader h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.folderTree {
+  background: transparent;
+}
+
+.folderCount {
+  margin-left: 8px;
+  color: #999;
+  font-size: 12px;
+}
+
+.listCard {
+  border-radius: 12px;
+}
+
+.searchBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 48px;
+}
+
+.listItem {
+  padding: 16px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.listItem:hover {
+  background: #fafafa;
+}
+
+.articleTitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1a1a1a;
+  cursor: pointer;
+}
+
+.articleTitle:hover {
+  color: #1890ff;
+}
+
+.articleMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.authors {
+  color: #666;
+  font-size: 14px;
+}
+
+.source {
+  color: #999;
+  font-size: 13px;
+}
+
+.stats {
+  display: flex;
+  gap: 16px;
+  color: #999;
+  font-size: 13px;
+}
+
+.notes {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #f5f5f5;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #666;
+}
+
+/* Search Page */
+.searchPage {
+  padding: 0;
+}
+
+.searchCard {
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.searchHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.searchHeader h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.searchInput {
+  margin-bottom: 16px;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.resultsCard {
+  border-radius: 12px;
+}
+
+.resultsHeader {
+  margin-bottom: 16px;
+  color: #666;
+}
+
+.resultsHeader strong {
+  color: #1890ff;
+}
+
+.abstract {
+  margin-top: 8px;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .searchBar {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+}

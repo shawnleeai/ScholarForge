@@ -1,0 +1,125 @@
+/* Templates Page Styles */
+
+.templateList {
+  padding: 24px;
+}
+
+.pageHeader {
+  margin-bottom: 24px;
+}
+
+.pageHeader h3 {
+  margin-bottom: 8px;
+}
+
+.filterCard {
+  margin-bottom: 16px;
+}
+
+.tabs {
+  margin-bottom: 16px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 60px 0;
+}
+
+.templateCard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardCover {
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.coverIcon {
+  font-size: 48px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.cardTitle {
+  flex: 1;
+  margin-right: 8px;
+}
+
+.cardDesc {
+  flex: 1;
+  margin-bottom: 12px;
+}
+
+.cardTags {
+  margin-bottom: 12px;
+}
+
+.tag {
+  margin-bottom: 4px;
+  font-size: 11px;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.rate {
+  font-size: 12px;
+}
+
+/* Preview Modal */
+.preview {
+  padding: 16px 0;
+}
+
+.previewInfo {
+  margin-bottom: 16px;
+}
+
+.previewSections {
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.sectionList {
+  margin: 8px 0 0 0;
+  padding-left: 20px;
+}
+
+.sectionList li {
+  margin-bottom: 4px;
+}
+
+.previewFormat {
+  margin-bottom: 16px;
+}
+
+.previewActions {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}

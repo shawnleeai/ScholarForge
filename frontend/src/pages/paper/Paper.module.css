@@ -1,0 +1,84 @@
+.paperList {
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.titleSection {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.titleSection h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.count {
+  color: #999;
+  font-size: 14px;
+}
+
+.filterCard {
+  margin-bottom: 16px;
+  border-radius: 12px;
+}
+
+.listCard {
+  border-radius: 12px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 48px;
+}
+
+.listItem {
+  cursor: pointer;
+  padding: 16px 0;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.listItem:hover {
+  background: #fafafa;
+}
+
+.paperTitle {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.paperMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.paperStats {
+  display: flex;
+  gap: 16px;
+  color: #999;
+  font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .paperStats {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
