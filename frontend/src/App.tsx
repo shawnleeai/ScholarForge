@@ -34,12 +34,21 @@ const ReferenceManagement = lazy(() => import('@/pages/reference/ReferenceManage
 const PlagiarismCheck = lazy(() => import('@/pages/plagiarism/PlagiarismCheck'))
 const FormatCheck = lazy(() => import('@/pages/format/FormatCheck'))
 const DefenseAssistant = lazy(() => import('@/pages/defense/DefenseAssistant'))
+const LiteratureReviewPage = lazy(() => import('@/pages/review').then(m => ({ default: m.LiteratureReviewPage })))
+const AnalyticsPage = lazy(() => import('@/pages/analytics').then(m => ({ default: m.AnalyticsPage })))
+const AIAgentPage = lazy(() => import('@/pages/AIAgent'))
+const DailyPapers = lazy(() => import('@/pages/daily/DailyPapers'))
+const InterestSettings = lazy(() => import('@/pages/settings/InterestSettings'))
 
 // 路由守卫
 import ProtectedRoute from '@/components/ProtectedRoute'
 
 // 错误边界
 import { ErrorBoundary } from '@/components'
+
+// 演示组件
+import { DemoProvider, GuidedTour, DemoBadge } from '@/components/demo'
+import { useDemo } from '@/components/demo/DemoProvider'
 
 // 懒加载 fallback 组件
 const PageLoading = () => (
@@ -52,6 +61,32 @@ const PageLoading = () => (
     <Spin size="large" tip="页面加载中..." />
   </div>
 )
+
+// 演示包装组件
+const DemoWrapper = ({ children }: { children: React.ReactNode }) => {
+  const { isDemoMode, endDemo } = useDemo()
+
+  return (
+    <>
+      {children}
+      {isDemoMode && (
+        <>
+          <GuidedTour
+            isOpen={isDemoMode}
+            onClose={endDemo}
+            onComplete={() => {
+              console.log('Tour completed')
+            }}
+          />
+          <DemoBadge onRestart={() => {
+            // 重置到第一步
+            window.location.reload()
+          }} />
+        </>
+      )}
+    </>
+  )
+}
 
 function App() {
   const { isAuthenticated, accessToken, setUser, setLoading, logout } = useAuthStore()
@@ -105,74 +140,91 @@ function App() {
   }
 
   return (
-    <ErrorBoundary>
-      <Suspense fallback={<PageLoading />}>
-        <Routes>
-          {/* 认证相关页面 */}
-          <Route element={<AuthLayout />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Route>
+    <DemoProvider>
+      <ErrorBoundary>
+        <Suspense fallback={<PageLoading />}>
+          <DemoWrapper>
+            <Routes>
+              {/* 认证相关页面 */}
+              <Route element={<AuthLayout />}>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+              </Route>
 
-          {/* 主应用页面 */}
-          <Route
-            element={
-              <ProtectedRoute>
-                <MainLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+              {/* 主应用页面 */}
+              <Route
+                element={
+                  <ProtectedRoute>
+                    <MainLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                <Route path="/dashboard" element={<Dashboard />} />
 
-            {/* 论文管理 */}
-            <Route path="/papers" element={<PaperList />} />
-            <Route path="/papers/:paperId" element={<PaperEditor />} />
-            <Route path="/papers/:paperId/sections/:sectionId" element={<PaperEditor />} />
+                {/* 论文管理 */}
+                <Route path="/papers" element={<PaperList />} />
+                <Route path="/papers/:paperId" element={<PaperEditor />} />
+                <Route path="/papers/:paperId/sections/:sectionId" element={<PaperEditor />} />
 
-            {/* 文献库 */}
-            <Route path="/library" element={<Library />} />
-            <Route path="/library/search" element={<Search />} />
+                {/* 文献库 */}
+                <Route path="/library" element={<Library />} />
+                <Route path="/library/search" element={<Search />} />
 
-            {/* 模板中心 */}
-            <Route path="/templates" element={<TemplateList />} />
+                {/* 模板中心 */}
+                <Route path="/templates" element={<TemplateList />} />
 
-            {/* 选题助手 */}
-            <Route path="/topic" element={<TopicAssistant />} />
+                {/* 选题助手 */}
+                <Route path="/topic" element={<TopicAssistant />} />
 
-            {/* 进度管理 */}
-            <Route path="/progress" element={<ProgressManager />} />
+                {/* 进度管理 */}
+                <Route path="/progress" element={<ProgressManager />} />
 
-            {/* 知识图谱 */}
-            <Route path="/knowledge" element={<KnowledgeGraph />} />
+                {/* 知识图谱 */}
+                <Route path="/knowledge" element={<KnowledgeGraph />} />
 
-            {/* 期刊匹配 */}
-            <Route path="/journal" element={<JournalMatcher />} />
+                {/* 期刊匹配 */}
+                <Route path="/journal" element={<JournalMatcher />} />
 
-            {/* 参考文献管理 */}
-            <Route path="/references" element={<ReferenceManagement />} />
+                {/* 参考文献管理 */}
+                <Route path="/references" element={<ReferenceManagement />} />
 
-            {/* 查重检测 */}
-            <Route path="/plagiarism" element={<PlagiarismCheck />} />
-            <Route path="/plagiarism/:paperId" element={<PlagiarismCheck />} />
+                {/* 查重检测 */}
+                <Route path="/plagiarism" element={<PlagiarismCheck />} />
+                <Route path="/plagiarism/:paperId" element={<PlagiarismCheck />} />
 
-            {/* 格式检测 */}
-            <Route path="/format" element={<FormatCheck />} />
-            <Route path="/format/:paperId" element={<FormatCheck />} />
+                {/* 格式检测 */}
+                <Route path="/format" element={<FormatCheck />} />
+                <Route path="/format/:paperId" element={<FormatCheck />} />
 
-            {/* 答辩准备 */}
-            <Route path="/defense" element={<DefenseAssistant />} />
-            <Route path="/defense/:paperId" element={<DefenseAssistant />} />
+                {/* 答辩准备 */}
+                <Route path="/defense" element={<DefenseAssistant />} />
+                <Route path="/defense/:paperId" element={<DefenseAssistant />} />
 
-            {/* 设置 */}
-            <Route path="/settings" element={<Settings />} />
-          </Route>
+                {/* 文献综述 */}
+                <Route path="/review" element={<LiteratureReviewPage />} />
 
-          {/* 404 页面 */}
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
-        </Routes>
-      </Suspense>
-    </ErrorBoundary>
+                {/* 学术分析 */}
+                <Route path="/analytics" element={<AnalyticsPage />} />
+
+                {/* 每日论文推荐 */}
+                <Route path="/daily" element={<DailyPapers />} />
+
+                {/* AI科研助手V2 */}
+                <Route path="/ai-agent" element={<AIAgentPage />} />
+
+                {/* 设置 */}
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/settings/interests" element={<InterestSettings />} />
+              </Route>
+
+              {/* 404 页面 */}
+              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            </Routes>
+          </DemoWrapper>
+        </Suspense>
+      </ErrorBoundary>
+    </DemoProvider>
   )
 }
 
