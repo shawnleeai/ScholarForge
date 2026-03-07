@@ -15,6 +15,7 @@ SERVICES = {
     "/api/v1/teams": "http://localhost:8001",
     "/api/v1/articles": "http://localhost:8002",
     "/api/v1/library": "http://localhost:8002",
+    "/api/v1/pdf": "http://localhost:8002",  # PDF解析服务（在article服务中）
     "/api/v1/papers": "http://localhost:8003",
     "/api/v1/templates": "http://localhost:8003",
     "/api/v1/ai": "http://localhost:8004",
@@ -27,6 +28,7 @@ SERVICES = {
     "/api/v1/plagiarism": "http://localhost:8003",
     "/api/v1/format": "http://localhost:8003",
     "/api/v1/defense": "http://localhost:8003",
+    "/api/v1/ai-agent": "http://localhost:8004",  # AI Agent服务
 }
 
 app = FastAPI(
@@ -59,7 +61,7 @@ def get_service_url(path: str) -> tuple[str, str]:
 @app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "PATCH", "DELETE"])
 async def proxy(request: Request, path: str):
     """代理请求到对应微服务"""
-    service_url, _ = get_service_url(f"/{path}")
+    service_url, matched_path = get_service_url(f"/{path}")
 
     if not service_url:
         return JSONResponse(
@@ -67,7 +69,7 @@ async def proxy(request: Request, path: str):
             content={"code": 404, "message": f"未找到匹配的服务: /{path}"}
         )
 
-    # 构建目标URL
+    # 构建目标URL - 保持完整路径
     target_url = f"{service_url}/{path}"
 
     # 获取请求体
