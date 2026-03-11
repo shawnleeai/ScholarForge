@@ -47,26 +47,29 @@ ScholarForge/
 │   │   ├── ai/            # AI 服务 (端口: 8004)
 │   │   ├── collab/        # 协作服务 (端口: 8005)
 │   │   └── recommend/     # 推荐服务 (端口: 8006)
-│   ├── shared/            # 共享模块
-│   │   ├── config.py      # 配置管理
-│   │   ├── database.py    # 数据库连接
-│   │   └── models.py      # 数据模型
+│   ├── gateway/            # API 网关
+│   ├── shared/             # 共享模块
 │   └── pyproject.toml
+├── paper/                   # 硕士论文文档
+│   ├── 01_绪论/            # 第1章
+│   ├── 02_理论基础/        # 第2章
+│   ├── 03_系统设计/        # 第3章
+│   ├── 04_技术实现/        # 第4章
+│   ├── 05_系统测试/        # 第5章
+│   └── 06_结论展望/        # 第6章
 ├── docs/                   # 文档
 │   ├── database/          # 数据库设计
-│   │   └── schema.sql
-│   └── api/               # API 文档
+│   ├── api/               # API 文档
+│   └── archive/           # 历史文档归档
+├── demo/                   # 演示数据
 ├── deploy/                 # 部署配置
-│   ├── docker/            # Docker 配置
-│   └── kubernetes/        # K8s 配置
-├── memory/                 # 项目记忆
+│   ├── aliyun/            # 阿里云部署
+│   └── aws/               # AWS部署
 ├── PRD.md                  # 产品需求文档
-├── 系统架构图.md            # 技术架构文档
-├── 文献系统概念设计.md       # 文献推荐系统设计
+├── TASKS.md                # 任务追踪
 ├── docker-compose.yml      # Docker Compose 配置
 ├── .env.example            # 环境变量示例
-├── .gitignore              # Git 忽略配置
-└── LICENSE                 # MIT 许可证
+└── .gitignore              # Git 忽略配置
 ```
 
 ## 🚀 快速开始

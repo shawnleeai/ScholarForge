@@ -1,0 +1,97 @@
+/**
+ * 期刊投稿助手样式
+ */
+
+.submissionAssistant {
+  padding: 24px;
+  min-height: calc(100vh - 64px);
+  background: #f5f5f5;
+}
+
+.mainCard {
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* 投稿清单样式 */
+.checklist {
+  padding: 16px 0;
+}
+
+.taskList {
+  margin-top: 16px;
+}
+
+.taskList :global(.ant-list-item) {
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s;
+}
+
+.taskList :global(.ant-list-item:hover) {
+  background: #f0f0f0;
+  border-color: #d9d9d9;
+}
+
+/* 投稿信样式 */
+.coverLetterSection {
+  padding: 16px 0;
+}
+
+.letterEditor {
+  font-family: 'Georgia', serif;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* 审稿回复样式 */
+.reviewResponse {
+  padding: 16px 0;
+}
+
+.responseLetterCard {
+  margin-top: 16px;
+}
+
+/* 投稿流程样式 */
+.processGuide {
+  padding: 16px 0;
+}
+
+.processGuide :global(.ant-steps-vertical) {
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .submissionAssistant {
+    padding: 12px;
+  }
+
+  .mainCard :global(.ant-tabs-tab) {
+    padding: 8px 12px;
+  }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.submissionAssistant :global(.ant-card) {
+  animation: fadeIn 0.3s ease;
+}

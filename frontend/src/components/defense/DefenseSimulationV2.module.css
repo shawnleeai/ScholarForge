@@ -1,0 +1,225 @@
+/**
+ * 智能模拟答辩系统 V2 样式
+ */
+
+.defenseSimulationV2 {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 设置面板 */
+.setupPanel {
+  padding: 8px;
+}
+
+.advisorList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.advisorPreview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 8px;
+  background: #f5f5f5;
+}
+
+/* 答辩面板 */
+.defensePanel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 状态栏 */
+.statusBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  color: white;
+}
+
+.statusBar :global(.ant-statistic-title) {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.statusBar :global(.ant-statistic-content) {
+  color: white;
+}
+
+/* 导师 Panel */
+.advisorPanel {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.advisorBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.6;
+  transition: all 0.3s;
+}
+
+.advisorBadge.active {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.advisorInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 问题卡片 */
+.questionCard {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+  border: none;
+}
+
+.questionText {
+  font-size: 18px;
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+.expectedPoints {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed #d9d9d9;
+}
+
+/* 回答区域 */
+.responseArea {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.inputWrapper textarea {
+  font-size: 16px;
+  line-height: 1.6;
+  resize: none;
+}
+
+.inputWrapper textarea.recording {
+  background: #fff2f0;
+  border-color: #ff4d4f;
+}
+
+.recordingIndicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.pulse {
+  width: 10px;
+  height: 10px;
+  background: #ff4d4f;
+  border-radius: 50%;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* 历史记录 */
+.historySection {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.historyItem {
+  padding: 8px 0;
+}
+
+/* 评价面板 */
+.evaluationPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.statsGrid {
+  margin-top: 16px;
+}
+
+.dimensionCard {
+  margin-top: 16px;
+}
+
+.dimensionItem {
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.dimensionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.suggestionsCard {
+  margin-top: 16px;
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+  .statusBar {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .advisorPanel {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  .controls button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,98 @@
+/**
+ * 智能投稿推荐样式
+ */
+
+.journalRecommender {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* 加载状态 */
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+}
+
+/* 策略卡片 */
+.strategyCard {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+}
+
+/* 推荐卡片 */
+.recommendationCard {
+  margin-bottom: 16px;
+}
+
+.recommendationCard :global(.ant-card-head) {
+  background: #fafafa;
+}
+
+/* 指标区域 */
+.metrics {
+  padding: 12px;
+  background: #f6ffed;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+/* 推荐理由 */
+.reasons {
+  padding: 12px;
+  background: #f0f5ff;
+  border-radius: 8px;
+}
+
+.reasons ul {
+  margin: 8px 0 0 0;
+  padding-left: 20px;
+}
+
+/* 接受概率 */
+.acceptanceProb {
+  padding: 12px;
+}
+
+/* 优劣势 */
+.pros,
+.cons {
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.pros {
+  background: #f6ffed;
+}
+
+.cons {
+  background: #fff2f0;
+}
+
+.pros ul,
+.cons ul {
+  margin: 8px 0 0 0;
+  padding-left: 16px;
+}
+
+/* 费用信息 */
+.feeInfo {
+  padding: 8px 0;
+  border-top: 1px dashed #d9d9d9;
+  border-bottom: 1px dashed #d9d9d9;
+}
+
+/* 操作按钮 */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .actions {
+    flex-direction: column;
+  }
+}

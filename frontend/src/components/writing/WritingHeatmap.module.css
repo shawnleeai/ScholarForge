@@ -1,0 +1,161 @@
+/**
+ * 写作码力值热力图样式
+ * GitHub风格的贡献热力图
+ */
+
+.heatmapCard {
+  margin-bottom: 16px;
+}
+
+/* 统计概览 */
+.statsRow {
+  margin-bottom: 16px;
+}
+
+/* 连续写作进度 */
+.streakProgress {
+  padding: 0 8px;
+}
+
+.streakHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+/* 热力图容器 */
+.heatmapContainer {
+  padding: 16px 8px;
+  overflow-x: auto;
+}
+
+/* 月份标签 */
+.monthLabels {
+  position: relative;
+  height: 20px;
+  margin-bottom: 8px;
+  margin-left: 32px;
+}
+
+.monthLabel {
+  position: absolute;
+  font-size: 11px;
+  color: #8c8c8c;
+  transform: translateX(-50%);
+}
+
+/* 热力图包装器 */
+.heatmapWrapper {
+  display: flex;
+  gap: 4px;
+}
+
+/* 星期标签 */
+.weekdayLabels {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 2px;
+}
+
+.weekdayLabel {
+  font-size: 10px;
+  color: #8c8c8c;
+  height: 12px;
+  line-height: 12px;
+  text-align: right;
+  width: 28px;
+}
+
+/* 热力图网格 */
+.heatmapGrid {
+  display: flex;
+  gap: 3px;
+}
+
+.weekColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.heatmapCell {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.heatmapCell:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 图例 */
+.legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-top: 12px;
+  font-size: 11px;
+}
+
+.legendCell {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+/* 生产力洞察 */
+.insights {
+  padding: 0 8px;
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+  .heatmapCell {
+    width: 10px;
+    height: 10px;
+  }
+
+  .weekdayLabel {
+    font-size: 9px;
+    height: 10px;
+    line-height: 10px;
+    width: 24px;
+  }
+
+  .monthLabel {
+    font-size: 10px;
+  }
+
+  .legendCell {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .heatmapCell {
+    width: 8px;
+    height: 8px;
+  }
+
+  .weekdayLabel {
+    font-size: 8px;
+    height: 8px;
+    line-height: 8px;
+    width: 20px;
+  }
+
+  .heatmapGrid {
+    gap: 2px;
+  }
+
+  .weekColumn {
+    gap: 2px;
+  }
+}

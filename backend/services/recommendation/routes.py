@@ -6,6 +6,7 @@ import uuid
 from typing import Optional
 
 from fastapi import APIRouter, Depends
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from shared.database import get_db
@@ -127,6 +128,3 @@ async def update_user_interests(
     await db.commit()
 
     return success_response(message="兴趣已更新")
-
-
-from sqlalchemy import select

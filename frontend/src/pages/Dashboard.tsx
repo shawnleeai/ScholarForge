@@ -3,7 +3,7 @@
  */
 
 import React from 'react'
-import { Row, Col, Card, Statistic, List, Button, Tag, Space, Typography } from 'antd'
+import { Row, Col, Card, Statistic, List, Button, Tag, Space, Typography, message } from 'antd'
 import {
   FileTextOutlined,
   BookOutlined,
@@ -11,6 +11,8 @@ import {
   ClockCircleOutlined,
   PlusOutlined,
   EditOutlined,
+  TrophyOutlined,
+  ThunderboltOutlined,
 } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
@@ -18,7 +20,10 @@ import { useQuery } from '@tanstack/react-query'
 import { paperService, articleService } from '@/services'
 import { useAuthStore } from '@/stores'
 import { DailyRecommendations } from '@/components'
+import { RecommendationCard } from '@/components/recommendation'
 import type { Paper, PaginatedResponse, LibraryItem } from '@/types'
+import type { RecommendedPaper } from '@/services/recommendationService'
+import { DemoLauncher } from '@/components/demo'
 import styles from './Dashboard.module.css'
 
 const { Title, Text } = Typography
@@ -95,21 +100,24 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className={styles.dashboard}>
-      <div className={styles.welcome}>
+      <div className={`${styles.welcome} dashboard-welcome`}>
         <div>
           <Title level={3} style={{ margin: 0 }}>
             欢迎回来，{user?.fullName || user?.username}！
           </Title>
           <Text type="secondary">今天是继续学术研究的好日子</Text>
         </div>
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          size="large"
-          onClick={() => navigate('/papers')}
-        >
-          新建论文
-        </Button>
+        <Space>
+          <DemoLauncher />
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            size="large"
+            onClick={() => navigate('/papers')}
+          >
+            新建论文
+          </Button>
+        </Space>
       </div>
 
       <Row gutter={[16, 16]} className={styles.statsRow}>
@@ -182,7 +190,7 @@ const Dashboard: React.FC = () => {
         </Col>
       </Row>
 
-      <Row gutter={[16, 16]} style={{ marginTop: 0 }}>
+      <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
         <Col xs={24} lg={16}>
           <Card title="快捷操作">
             <Row gutter={16}>
@@ -197,8 +205,25 @@ const Dashboard: React.FC = () => {
                 </Button>
               </Col>
               <Col span={8}>
-                <Button block icon={<TeamOutlined />} size="large">
+                <Button block icon={<TeamOutlined />} size="large" onClick={() => message.info('协作功能开发中，敬请期待！')}>
                   邀请协作者
+                </Button>
+              </Col>
+            </Row>
+            <Row gutter={16} style={{ marginTop: 16 }}>
+              <Col span={8}>
+                <Button block icon={<TrophyOutlined />} onClick={() => navigate('/analytics')} size="large" type="primary">
+                  学术影响力
+                </Button>
+              </Col>
+              <Col span={8}>
+                <Button block icon={<ThunderboltOutlined />} onClick={() => navigate('/review')} size="large" type="primary">
+                  生成综述
+                </Button>
+              </Col>
+              <Col span={8}>
+                <Button block icon={<BookOutlined />} onClick={() => navigate('/library')} size="large">
+                  文献库
                 </Button>
               </Col>
             </Row>

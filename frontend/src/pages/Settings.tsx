@@ -7,6 +7,7 @@ import { Card, Form, Input, Button, Avatar, Upload, message, Divider, Switch, Se
 import { UserOutlined } from '@ant-design/icons'
 
 import { useAuthStore } from '@/stores'
+import ThemeSettings from '@/components/settings/ThemeSettings'
 import styles from './Settings.module.css'
 
 const { Option } = Select
@@ -120,6 +121,9 @@ const Settings: React.FC = () => {
           </Form.Item>
         </Form>
       </Card>
+
+      {/* 主题外观设置 */}
+      <ThemeSettings />
     </div>
   )
 }

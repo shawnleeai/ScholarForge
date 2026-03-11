@@ -4,6 +4,7 @@
 .env
 .env.local
 .env.*.local
+.env.quickstart
 !.env.example
 
 # ==================== Python ====================
@@ -122,3 +123,4 @@ $RECYCLE.BIN/
 *.seed
 *.pid.lock
 .claude/
+memory/

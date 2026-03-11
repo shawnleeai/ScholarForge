@@ -1,0 +1,127 @@
+.generator {
+  width: 100%;
+}
+
+.steps {
+  margin-bottom: 24px;
+}
+
+.content {
+  min-height: 400px;
+  padding: 24px;
+  background: #fafafa;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.stepContent {
+  width: 100%;
+}
+
+.previewSection {
+  margin-top: 24px;
+}
+
+.recommendations {
+  margin-top: 24px;
+}
+
+.recCard {
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.recCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.recHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.recContent {
+  text-align: center;
+}
+
+.chartPreview {
+  width: 100%;
+}
+
+.exportButtons {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.dataPreview {
+  margin-top: 16px;
+}
+
+.configSection {
+  margin-top: 24px;
+}
+
+.chartTypeGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.chartTypeCard {
+  text-align: center;
+  padding: 16px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s;
+}
+
+.chartTypeCard:hover {
+  border-color: #1890ff;
+}
+
+.chartTypeCard.selected {
+  border-color: #1890ff;
+  background: #e6f7ff;
+}
+
+.chartTypeIcon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.recommendationReason {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #666;
+}
+
+.suitabilityBar {
+  margin-top: 12px;
+}
+
+.suitabilityItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.suitabilityLabel {
+  width: 80px;
+  font-size: 12px;
+}
+
+.suitabilityProgress {
+  flex: 1;
+}

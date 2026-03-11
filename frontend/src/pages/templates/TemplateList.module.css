@@ -1,0 +1,151 @@
+.container {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* 头部 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.headerContent {
+  flex: 1;
+}
+
+.headerStats {
+  display: flex;
+  gap: 32px;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.statNumber {
+  font-size: 28px;
+  color: #1890ff;
+}
+
+/* 搜索栏 */
+.searchBar {
+  margin-bottom: 24px;
+}
+
+.searchInput {
+  max-width: 600px;
+}
+
+/* 主内容区 */
+.mainContent {
+  display: flex;
+}
+
+/* 列表卡片 */
+.listCard {
+  min-height: 600px;
+}
+
+.listHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 模板卡片 */
+.templateCard {
+  height: 100%;
+  transition: all 0.3s;
+}
+
+.templateCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.cardCover {
+  position: relative;
+  height: 140px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.coverPlaceholder {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+.cardActions {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.templateCard:hover .cardActions {
+  opacity: 1;
+}
+
+.cardBadge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.cardContent {
+  padding: 12px;
+}
+
+.cardTitle {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.cardDesc {
+  margin-bottom: 12px;
+  min-height: 40px;
+}
+
+.cardMeta {
+  margin-top: 8px;
+}
+
+/* 列表视图 */
+.listItem {
+  padding: 16px;
+  transition: background 0.3s;
+}
+
+.listItem:hover {
+  background: #fafafa;
+}
+
+.listStats {
+  text-align: right;
+  min-width: 120px;
+}
+
+/* 分页 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #f0f0f0;
+}

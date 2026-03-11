@@ -1,0 +1,74 @@
+/**
+ * AI智能引用审查样式
+ */
+
+.citationReviewer {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* 审查结果 */
+.reviewResults {
+  padding: 8px;
+}
+
+.statsCard {
+  margin-bottom: 16px;
+}
+
+.progressSection {
+  margin-top: 16px;
+}
+
+/* 列表头部 */
+.listHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 引用列表 */
+.citationsList {
+  margin-top: 16px;
+}
+
+.citationItem {
+  padding: 16px;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.citationContent {
+  width: 100%;
+}
+
+.citationHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.rawText {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 12px;
+  padding: 8px;
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+.formattedText {
+  padding: 12px;
+  background: #f6ffed;
+  border-left: 3px solid #52c41a;
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 12px;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .citationHeader {
+    flex-wrap: wrap;
+  }
+}

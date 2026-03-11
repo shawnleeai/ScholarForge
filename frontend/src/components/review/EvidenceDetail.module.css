@@ -1,0 +1,41 @@
+.evidenceModal :global(.ant-modal-body) {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.header {
+  margin-bottom: 16px;
+}
+
+.title {
+  margin-bottom: 12px !important;
+}
+
+.findingsCard {
+  background: #fafafa;
+}
+
+.claimSection {
+  padding: 16px;
+  background: #e6f7ff;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.sectionLabel {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.claim {
+  font-size: 16px;
+  margin: 0;
+}
+
+.findingsSection {
+  padding: 16px;
+}
+
+.statCard {
+  text-align: center;
+}

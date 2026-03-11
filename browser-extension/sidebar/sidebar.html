@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScholarForge 侧边栏</title>
+  <link rel="stylesheet" href="sidebar.css">
+</head>
+<body>
+  <div class="sidebar-container">
+    <!-- 头部 -->
+    <header class="sidebar-header">
+      <div class="header-logo">
+        <span class="logo-icon">📚</span>
+        <span class="logo-text">ScholarForge</span>
+      </div>
+      <button class="header-close" id="close-btn" title="关闭">×</button>
+    </header>
+
+    <!-- 标签导航 -->
+    <nav class="sidebar-tabs">
+      <button class="tab-btn active" data-tab="library" title="文献库">
+        <span class="tab-icon">📄</span>
+        <span class="tab-text">文献</span>
+      </button>
+      <button class="tab-btn" data-tab="notes" title="笔记">
+        <span class="tab-icon">📝</span>
+        <span class="tab-text">笔记</span>
+      </button>
+      <button class="tab-btn" data-tab="citations" title="引用">
+        <span class="tab-icon">📋</span>
+        <span class="tab-text">引用</span>
+      </button>
+      <button class="tab-btn" data-tab="ai" title="AI助手">
+        <span class="tab-icon">🤖</span>
+        <span class="tab-text">AI</span>
+      </button>
+      <button class="tab-btn" data-tab="tools" title="工具">
+        <span class="tab-icon">🛠️</span>
+        <span class="tab-text">工具</span>
+      </button>
+    </nav>
+
+    <!-- 内容区域 -->
+    <main class="sidebar-content">
+      <!-- 文献库标签 -->
+      <div class="tab-panel active" id="panel-library">
+        <div class="panel-header">
+          <h3 class="panel-title">当前页面</h3>
+          <button class="panel-action" id="import-current-btn">📥 导入</button>
+        </div>
+
+        <div class="current-page-card" id="current-page-card">
+          <div class="page-placeholder">
+            <span class="placeholder-icon">📄</span>
+            <p>正在获取页面信息...</p>
+          </div>
+        </div>
+
+        <div class="panel-header">
+          <h3 class="panel-title">相关文献</h3>
+          <button class="panel-action" id="refresh-related-btn">🔄</button>
+        </div>
+
+        <div class="related-articles" id="related-articles">
+          <div class="empty-state">
+            <span class="empty-icon">🔍</span>
+            <p>导入当前页面后查看相关文献</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 笔记标签 -->
+      <div class="tab-panel" id="panel-notes">
+        <div class="panel-header">
+          <h3 class="panel-title">快速笔记</h3>
+        </div>
+
+        <div class="quick-note">
+          <textarea
+            id="note-input"
+            placeholder="记录你的想法..."
+            rows="4"
+          ></textarea>
+          <div class="note-actions">
+            <select id="note-tag" class="note-tag-select">
+              <option value="">选择标签...</option>
+              <option value="idea">💡 想法</option>
+              <option value="question">❓ 问题</option>
+              <option value="important">⭐ 重要</option>
+              <option value="todo">📌 待办</option>
+            </select>
+            <button class="btn-primary" id="save-note-btn">保存笔记</button>
+          </div>
+        </div>
+
+        <div class="panel-header">
+          <h3 class="panel-title">本页笔记</h3>
+        </div>
+
+        <div class="page-notes" id="page-notes">
+          <div class="empty-state">
+            <span class="empty-icon">📝</span>
+            <p>暂无笔记</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 引用标签 -->
+      <div class="tab-panel" id="panel-citations">
+        <div class="panel-header">
+          <h3 class="panel-title">引用格式</h3>
+        </div>
+
+        <div class="citation-formats">
+          <div class="format-tabs">
+            <button class="format-btn active" data-format="apa">APA</button>
+            <button class="format-btn" data-format="mla">MLA</button>
+            <button class="format-btn" data-format="chicago">Chicago</button>
+            <button class="format-btn" data-format="gb">GB/T</button>
+          </div>
+
+          <div class="citation-output">
+            <textarea id="citation-text" readonly></textarea>
+            <button class="btn-copy" id="copy-citation-btn">📋 复制</button>
+          </div>
+        </div>
+
+        <div class="panel-header">
+          <h3 class="panel-title">引用管理</h3>
+        </div>
+
+        <div class="citation-actions">
+          <button class="action-card" id="add-to-library-btn">
+            <span class="action-icon">➕</span>
+            <span class="action-label">添加到文献库</span>
+          </button>
+          <button class="action-card" id="export-citations-btn">
+            <span class="action-icon">📤</span>
+            <span class="action-label">导出引用列表</span>
+          </button>
+          <button class="action-card" id="generate-bib-btn">
+            <span class="action-icon">📑</span>
+            <span class="action-label">生成参考文献</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- AI助手标签 -->
+      <div class="tab-panel" id="panel-ai">
+        <div class="ai-chat" id="ai-chat">
+          <div class="chat-messages" id="chat-messages">
+            <div class="ai-message">
+              <div class="message-avatar">🤖</div>
+              <div class="message-content">
+                <p>你好！我是 ScholarForge AI 助手。我可以帮你：</p>
+                <ul>
+                  <li>总结当前页面内容</li>
+                  <li>回答学术问题</li>
+                  <li>提供写作建议</li>
+                  <li>解释专业术语</li>
+                </ul>
+                <p>请问有什么可以帮你的？</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="quick-prompts">
+            <button class="prompt-chip" data-prompt="总结这篇文章">总结文章</button>
+            <button class="prompt-chip" data-prompt="列出关键观点">关键观点</button>
+            <button class="prompt-chip" data-prompt="研究方法是什么">研究方法</button>
+            <button class="prompt-chip" data-prompt="有什么局限性">局限性</button>
+          </div>
+
+          <div class="chat-input-area">
+            <textarea
+              id="chat-input"
+              placeholder="输入你的问题..."
+              rows="2"
+            ></textarea>
+            <button class="btn-send" id="send-btn">➤</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 工具标签 -->
+      <div class="tab-panel" id="panel-tools">
+        <div class="tools-grid">
+          <button class="tool-card" id="tool-translate">
+            <span class="tool-icon">🌐</span>
+            <span class="tool-name">翻译</span>
+            <span class="tool-desc">翻译选中内容</span>
+          </button>
+          <button class="tool-card" id="tool-define">
+            <span class="tool-icon">📖</span>
+            <span class="tool-name">定义</span>
+            <span class="tool-desc">查找术语定义</span>
+          </button>
+          <button class="tool-card" id="tool-summarize">
+            <span class="tool-icon">📝</span>
+            <span class="tool-name">摘要</span>
+            <span class="tool-desc">生成内容摘要</span>
+          </button>
+          <button class="tool-card" id="tool-highlight">
+            <span class="tool-icon">🖍️</span>
+            <span class="tool-name">高亮</span>
+            <span class="tool-desc">高亮重要内容</span>
+          </button>
+          <button class="tool-card" id="tool-screenshot">
+            <span class="tool-icon">📷</span>
+            <span class="tool-name">截图</span>
+            <span class="tool-desc">保存页面截图</span>
+          </button>
+          <button class="tool-card" id="tool-export">
+            <span class="tool-icon">💾</span>
+            <span class="tool-name">导出</span>
+            <span class="tool-desc">导出页面内容</span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- 底部 -->
+    <footer class="sidebar-footer">
+      <button class="footer-btn" id="open-app-btn">
+        <span>🚀</span>
+        <span>打开应用</span>
+      </button>
+      <button class="footer-btn" id="settings-btn">
+        <span>⚙️</span>
+        <span>设置</span>
+      </button>
+    </footer>
+  </div>
+
+  <script src="sidebar.js"></script>
+</body>
+</html>

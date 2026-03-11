@@ -15,6 +15,7 @@ import {
   FileTextOutlined,
   ReloadOutlined,
   CheckCircleOutlined,
+  MessageOutlined,
 } from '@ant-design/icons'
 
 import { aiService } from '@/services'
@@ -23,6 +24,7 @@ import type { WritingTaskType } from '@/types'
 import ReferenceSuggestions from './ReferenceSuggestions'
 import SummaryPanel from './SummaryPanel'
 import LogicCheckPanel from './LogicCheckPanel'
+import ChatPanel from './ChatPanel'
 import styles from './AIPanel.module.css'
 
 const { Sider } = Layout
@@ -100,6 +102,30 @@ const AIPanel: React.FC = () => {
   }
 
   const tabItems = [
+    {
+      key: 'chat',
+      label: (
+        <span>
+          <MessageOutlined />
+          对话问答
+        </span>
+      ),
+      children: (
+        <ChatPanel
+          conversationId={currentPaper?.id}
+          paperId={currentPaper?.id}
+          height="calc(100vh - 200px)"
+          placeholder={
+            currentPaper
+              ? `针对论文 "${currentPaper.title}" 提问...`
+              : '输入您的问题，AI将基于您的文献库回答...'
+          }
+          onSendMessage={(content) => {
+            console.log('发送消息:', content)
+          }}
+        />
+      ),
+    },
     {
       key: 'writing',
       label: (

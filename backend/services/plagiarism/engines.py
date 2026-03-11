@@ -12,6 +12,8 @@ from datetime import datetime
 import aiohttp
 import asyncio
 
+from .simhash_engine import SimHashEngine, SimHashResult
+
 
 @dataclass
 class SimilarityMatch:
@@ -100,18 +102,29 @@ class BasePlagiarismEngine(abc.ABC):
 class LocalPlagiarismEngine(BasePlagiarismEngine):
     """
     本地查重引擎
-    基于本地数据库和算法进行查重
+    基于SimHash算法进行文本相似度检测
     """
 
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.similarity_threshold = config.get('similarity_threshold', 0.6)
-        self.min_match_length = config.get('min_match_length', 10)
+        self.min_match_length = config.get('min_match_length', 50)
+        self.hamming_threshold = config.get('hamming_threshold', 3)
+
+        # 初始化SimHash引擎
+        self.simhash_engine = SimHashEngine(
+            hash_bits=64,
+            hamming_threshold=self.hamming_threshold,
+            chunk_size=self.min_match_length
+        )
+
+        # 本地文档库
+        self._local_db: Dict[str, str] = {}
 
     async def check(self, text: str, title: Optional[str] = None) -> PlagiarismResult:
         """
         本地查重实现
-        使用文本指纹算法检测相似度
+        使用SimHash算法检测相似度
         """
         import time
         start_time = time.time()
@@ -120,29 +133,52 @@ class LocalPlagiarismEngine(BasePlagiarismEngine):
             # 预处理文本
             processed_text = self._preprocess_text(text)
 
-            # 分段
-            segments = self._segment_text(processed_text)
+            # 使用SimHash进行详细检测
+            check_result = self.simhash_engine.detailed_check(
+                processed_text,
+                self._local_db
+            )
 
-            # 模拟查重结果（实际实现需要连接本地数据库）
-            # 这里使用简化的算法计算文本自身的重复特征
+            # 查找相似文档
+            similar_docs = self.simhash_engine.find_similar(processed_text, self._local_db)
+
+            # 构建匹配结果
             matches = []
             sources = []
 
-            # 检测自我重复（简单的n-gram重复检测）
-            self_matches = self._detect_self_repetition(segments)
-            matches.extend(self_matches)
+            # 处理分块检测结果
+            for chunk_result in check_result['chunk_results']:
+                if chunk_result['similarity'] >= self.similarity_threshold:
+                    chunk = chunk_result['chunk']
+                    matches.append(SimilarityMatch(
+                        text=chunk.content[:200],
+                        start_index=chunk.start_pos,
+                        end_index=chunk.end_pos,
+                        similarity=chunk_result['similarity'],
+                        source_id=chunk_result['best_match'] or 'unknown',
+                        source_title='本地数据库匹配'
+                    ))
 
-            # 模拟整体相似度（实际应从数据库对比得出）
-            overall_similarity = len(matches) * 2.5 if matches else 0.0
-            overall_similarity = min(overall_similarity, 100.0)
+            # 处理相似文档
+            for sim_result in similar_docs:
+                sources.append(SimilaritySource(
+                    id=sim_result.source_id,
+                    title=f"相似文档 {sim_result.source_id}",
+                    type='local',
+                    similarity=sim_result.similarity,
+                    match_count=1
+                ))
+
+            # 计算整体相似度
+            overall_similarity = check_result['overall_similarity'] * 100
 
             processing_time = time.time() - start_time
 
             return PlagiarismResult(
                 success=True,
                 overall_similarity=overall_similarity,
-                internet_similarity=overall_similarity * 0.3,
-                publications_similarity=overall_similarity * 0.4,
+                internet_similarity=overall_similarity * 0.2,
+                publications_similarity=overall_similarity * 0.5,
                 student_papers_similarity=overall_similarity * 0.3,
                 matches=matches,
                 sources=sources,
@@ -168,39 +204,15 @@ class LocalPlagiarismEngine(BasePlagiarismEngine):
             'progress': 100
         }
 
-    def _segment_text(self, text: str, segment_length: int = 50) -> List[str]:
-        """将文本分段"""
-        segments = []
-        for i in range(0, len(text), segment_length):
-            segment = text[i:i + segment_length].strip()
-            if len(segment) >= self.min_match_length:
-                segments.append(segment)
-        return segments
+    def add_to_database(self, doc_id: str, text: str):
+        """添加文档到本地查重库"""
+        self._local_db[doc_id] = text
+        self.simhash_engine.add_document(doc_id, text)
 
-    def _detect_self_repetition(self, segments: List[str]) -> List[SimilarityMatch]:
-        """检测文本内部的自我重复"""
-        matches = []
-        seen = {}
-
-        for i, segment in enumerate(segments):
-            # 简化指纹：取前20个字符
-            fingerprint = segment[:20]
-
-            if fingerprint in seen and i - seen[fingerprint] > 1:
-                # 发现重复
-                match = SimilarityMatch(
-                    text=segment[:100],
-                    start_index=seen[fingerprint] * 50,
-                    end_index=seen[fingerprint] * 50 + len(segment),
-                    similarity=0.9,
-                    source_id='self',
-                    source_title='文本内部重复'
-                )
-                matches.append(match)
-            else:
-                seen[fingerprint] = i
-
-        return matches
+    def batch_add_to_database(self, documents: Dict[str, str]):
+        """批量添加文档到本地查重库"""
+        for doc_id, text in documents.items():
+            self.add_to_database(doc_id, text)
 
 
 class TurnitinEngine(BasePlagiarismEngine):

@@ -1,0 +1,13 @@
+.statsPanel {
+  width: 100%;
+}
+
+.overviewStats {
+  margin-bottom: 24px;
+}
+
+.chartContainer {
+  padding: 24px;
+  background: #fafafa;
+  border-radius: 8px;
+}

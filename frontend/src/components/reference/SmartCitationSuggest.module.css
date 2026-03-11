@@ -1,0 +1,91 @@
+.suggestPanel {
+  width: 100%;
+}
+
+.contextInfo {
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #f6ffed;
+  border-radius: 4px;
+}
+
+.listItem {
+  padding: 0;
+  border: none;
+}
+
+.citationCard {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.citationHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.citationTitle {
+  max-width: 200px;
+}
+
+.citationMeta {
+  margin-bottom: 8px;
+}
+
+.snippet {
+  font-style: italic;
+  margin-bottom: 8px;
+  padding: 8px;
+  background: #f5f5f5;
+  border-left: 3px solid #1890ff;
+}
+
+.citationReason {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.reasonText {
+  font-size: 12px;
+}
+
+.citationStats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.searchBox {
+  margin-bottom: 16px;
+}
+
+.detailModal {
+  margin-top: 16px;
+}
+
+.detailHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.scoreSection {
+  margin-top: 16px;
+}
+
+.scores {
+  margin-top: 12px;
+}
+
+.scoreItem {
+  margin-bottom: 12px;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

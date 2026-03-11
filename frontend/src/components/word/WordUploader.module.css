@@ -1,0 +1,86 @@
+/**
+ * Word文档上传组件样式
+ */
+
+.wordUploader {
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.mainCard {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.steps {
+  margin-bottom: 32px;
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.content {
+  min-height: 400px;
+}
+
+/* 上传区域 */
+.uploadArea {
+  padding: 48px 24px;
+  text-align: center;
+}
+
+/* 解析结果 */
+.parseResult {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.structureCard,
+.abstractCard,
+.validationCard {
+  margin-top: 16px;
+  border-radius: 8px;
+}
+
+.moreText {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  font-size: 12px;
+}
+
+.importActions {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #f0f0f0;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .wordUploader {
+    padding: 12px;
+  }
+
+  .steps {
+    padding: 8px;
+  }
+
+  .steps :global(.ant-steps-item-title) {
+    font-size: 12px;
+  }
+
+  .uploadArea {
+    padding: 24px 12px;
+  }
+}

@@ -24,6 +24,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     server: {
+      host: '0.0.0.0', // 监听所有网络接口
       port: 5173,
       proxy: {
         // 统一代理到API网关

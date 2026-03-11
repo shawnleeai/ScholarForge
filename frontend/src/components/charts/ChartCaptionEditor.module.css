@@ -1,0 +1,137 @@
+.editor {
+  width: 100%;
+}
+
+.chartPreview {
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.chartInfo {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.generatePanel {
+  padding: 16px 0;
+}
+
+.optionsRow {
+  margin-bottom: 16px;
+}
+
+.statsCheckbox {
+  margin-bottom: 16px;
+}
+
+.generateBtn {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.suggestionsSection {
+  margin-top: 24px;
+}
+
+.suggestionItem {
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+}
+
+.suggestionItem:hover {
+  background: #f0f0f0;
+}
+
+.suggestionItem.selected {
+  border-color: #1890ff;
+  background: #e6f7ff;
+}
+
+.editPanel {
+  padding: 16px 0;
+}
+
+.editActions {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.saveBtn {
+  margin-top: 16px;
+}
+
+.qualityPanel {
+  padding: 16px 0;
+}
+
+.qualityScore {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.scoreValue {
+  margin-left: 12px;
+  font-size: 32px;
+  color: #1890ff;
+}
+
+.qualityDimensions {
+  margin-bottom: 24px;
+}
+
+.dimensionItem {
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.dimensionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.dimensionSlider {
+  margin: 8px 0;
+}
+
+.dimensionComment {
+  font-size: 12px;
+}
+
+.improvements {
+  margin-bottom: 24px;
+}
+
+.improveBtn {
+  margin-top: 16px;
+  width: 100%;
+}
+
+.strengths {
+  margin-bottom: 24px;
+}
+
+.guidelines {
+  padding: 16px 0;
+}
+
+.guidelineAlert {
+  margin-bottom: 24px;
+}
+
+.templateCard {
+  margin-bottom: 16px;
+  background: #f6ffed;
+}
+
+.exportButtons {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}

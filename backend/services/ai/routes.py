@@ -3,6 +3,7 @@ AI 服务 API 路由
 FastAPI 路由定义
 """
 
+import json
 import uuid
 from typing import Optional, List
 

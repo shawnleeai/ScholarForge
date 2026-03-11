@@ -4,9 +4,9 @@ FastAPI 路由定义
 """
 
 import uuid
-from datetime import timedelta
+from datetime import timedelta, datetime, timezone
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from shared.database import get_db
@@ -14,7 +14,12 @@ from shared.exceptions import ConflictException, NotFoundException, Unauthorized
 from shared.responses import success_response, paginated_response
 from shared.config import settings
 from shared.dependencies import get_current_user_id, get_pagination_params, PaginationParams
-from shared.security import create_access_token, create_refresh_token, verify_token
+from shared.security import (
+    create_access_token,
+    create_refresh_token,
+    verify_token,
+    revoke_token,
+)
 
 from .schemas import (
     UserCreate,
@@ -83,7 +88,16 @@ async def login(
     login_data: LoginRequest,
     db: AsyncSession = Depends(get_db),
 ):
-    """用户登录"""
+    """
+    用户登录
+
+    Token 会同时通过以下两种方式返回：
+    1. 响应体中（向后兼容）
+    2. httpOnly Cookie（推荐，更安全）
+    """
+    import json
+    from fastapi.responses import JSONResponse
+
     user_repo = UserRepository(db)
 
     # 验证用户
@@ -99,9 +113,17 @@ async def login(
     access_token = create_access_token(subject=str(user.id))
     refresh_token = create_refresh_token(subject=str(user.id))
 
-    return success_response(
-        data={
-            "user": UserResponse.model_validate(user).model_dump(),
+    # 构建响应数据（确保 UUID 转换为字符串）
+    user_data = UserResponse.model_validate(user).model_dump()
+    # 将 UUID 转换为字符串
+    if 'id' in user_data and hasattr(user_data['id'], 'hex'):
+        user_data['id'] = str(user_data['id'])
+
+    response_data = {
+        "code": 200,
+        "message": "登录成功",
+        "data": {
+            "user": user_data,
             "token": {
                 "access_token": access_token,
                 "refresh_token": refresh_token,
@@ -109,8 +131,35 @@ async def login(
                 "expires_in": settings.jwt_expire_hours * 3600,
             },
         },
-        message="登录成功",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+    }
+
+    # 创建 JSONResponse 并设置 Cookie
+    response = JSONResponse(content=response_data)
+
+    # 设置 httpOnly Cookie（更安全）
+    response.set_cookie(
+        key="access_token",
+        value=access_token,
+        httponly=True,
+        secure=not settings.debug,  # 生产环境使用 HTTPS
+        samesite="lax",
+        max_age=settings.jwt_expire_hours * 3600,
+        path="/",
     )
+
+    # Refresh Token Cookie
+    response.set_cookie(
+        key="refresh_token",
+        value=refresh_token,
+        httponly=True,
+        secure=not settings.debug,
+        samesite="lax",
+        max_age=settings.jwt_refresh_expire_days * 24 * 3600,
+        path="/api/v1/auth",  # 仅用于刷新令牌的路径
+    )
+
+    return response
 
 
 @router.post("/auth/refresh", summary="刷新令牌")
@@ -147,9 +196,32 @@ async def refresh_token(
 
 @router.post("/auth/logout", summary="用户登出")
 async def logout(
+    request: Request,
+    response: Response,
     user_id: str = Depends(get_current_user_id),
 ):
-    """用户登出（客户端清除令牌即可）"""
+    """
+    用户登出
+
+    - 将当前 Token 添加到黑名单
+    - 清除 httpOnly Cookie
+    """
+    # 从请求头获取 Token 并添加到黑名单
+    auth_header = request.headers.get("authorization", "")
+    if auth_header.startswith("Bearer "):
+        token = auth_header[7:]
+        revoke_token(token)
+
+    # 清除 Cookie
+    response.delete_cookie(
+        key="access_token",
+        path="/",
+    )
+    response.delete_cookie(
+        key="refresh_token",
+        path="/api/v1/auth",
+    )
+
     return success_response(message="登出成功")
 
 
@@ -233,8 +305,8 @@ async def get_user_profile(
         research_interests=user.research_interests or [],
         preferences=user.preferences,
         paper_count=len(user.papers) if user.papers else 0,
-        library_count=0,  # TODO: 从文献服务获取
-        collaboration_count=0,  # TODO: 从协作服务获取
+        library_count=getattr(user, 'library_count', 0) or 0,  # 可通过文献服务API获取
+        collaboration_count=getattr(user, 'collaboration_count', 0) or 0,  # 可通过协作服务API获取
     )
 
     return success_response(data=profile.model_dump())

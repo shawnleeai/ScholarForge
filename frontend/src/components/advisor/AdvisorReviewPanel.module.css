@@ -1,0 +1,95 @@
+/**
+ * 导师审阅面板样式
+ */
+
+.advisorReviewPanel {
+  padding: 24px;
+  min-height: calc(100vh - 64px);
+  background: #f5f5f5;
+}
+
+.mainCard {
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* 概览样式 */
+.overview {
+  padding: 16px 0;
+}
+
+.statsRow {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.paperInfo {
+  margin-top: 16px;
+}
+
+/* 评分样式 */
+.scoring {
+  padding: 16px 0;
+}
+
+.dimensionList {
+  margin-top: 16px;
+}
+
+.dimensionList :global(.ant-list-item) {
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+}
+
+.totalScore {
+  margin-top: 16px;
+  padding: 12px;
+  background: #e6f7ff;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* 意见样式 */
+.comments {
+  padding: 16px 0;
+}
+
+.addCommentCard {
+  margin-bottom: 16px;
+}
+
+/* 预览样式 */
+.preview {
+  padding: 16px 0;
+}
+
+.previewCard {
+  margin-top: 16px;
+  background: #fafafa;
+}
+
+.previewSection {
+  padding: 8px 0;
+}
+
+.decisionTag {
+  font-size: 16px;
+  padding: 4px 16px;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .advisorReviewPanel {
+    padding: 12px;
+  }
+
+  .statsRow {
+    flex-direction: column;
+  }
+}

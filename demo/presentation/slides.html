@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScholarForge 产品演示</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #1890ff;
+      --primary-dark: #096dd9;
+      --secondary: #722ed1;
+      --success: #52c41a;
+      --warning: #fa8c16;
+      --error: #f5222d;
+      --bg-dark: #141414;
+      --bg-card: #1f1f1f;
+      --text-primary: #ffffff;
+      --text-secondary: #a6a6a6;
+      --border-color: #303030;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      overflow: hidden;
+    }
+
+    .presentation {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .logo-text {
+      font-size: 20px;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .slide-counter {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* Slide Container */
+    .slide-container {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 60px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateX(50px);
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+
+    .slide.prev {
+      transform: translateX(-50px);
+    }
+
+    /* Slide Content */
+    .slide-title {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .slide-subtitle {
+      font-size: 24px;
+      color: var(--text-secondary);
+      margin-bottom: 48px;
+      line-height: 1.6;
+    }
+
+    .slide-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 32px;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(24, 144, 255, 0.15);
+    }
+
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .feature-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 32px;
+      background: var(--bg-card);
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .stat-number {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    /* Timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 800px;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    .timeline-marker {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .timeline-content h4 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .timeline-content p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: transparent;
+      color: var(--text-primary);
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn:hover {
+      border-color: var(--primary);
+      background: rgba(24, 144, 255, 0.1);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .progress-bar {
+      flex: 1;
+      max-width: 400px;
+      height: 4px;
+      background: var(--border-color);
+      border-radius: 2px;
+      margin: 0 40px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    /* Hero Slide */
+    .hero-slide {
+      text-align: center;
+    }
+
+    .hero-slide .slide-title {
+      font-size: 64px;
+      margin-bottom: 32px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 8px 16px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 32px;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 48px;
+    }
+
+    .cta-btn {
+      padding: 16px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .cta-btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .cta-btn-secondary {
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .slide {
+        padding: 40px;
+      }
+
+      .slide-title {
+        font-size: 36px;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 16px 24px;
+      }
+
+      .slide {
+        padding: 24px;
+      }
+
+      .slide-title {
+        font-size: 28px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .progress-bar {
+        width: 100%;
+        margin: 0;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .delay-3 { animation-delay: 0.3s; opacity: 0; }
+    .delay-4 { animation-delay: 0.4s; opacity: 0; }
+  </style>
+</head>
+<body>
+  <div class="presentation">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <div class="logo-icon">S</div>
+        <span class="logo-text">ScholarForge</span>
+      </div>
+      <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">8</span></span>
+    </header>
+
+    <!-- Slide Container -->
+    <div class="slide-container">
+      <!-- Slide 1: Hero -->
+      <div class="slide hero-slide active" data-slide="1">
+        <div class="hero-badge">🚀 AI驱动的学术研究平台</div>
+        <h1 class="slide-title">ScholarForge</h1>
+        <p class="slide-subtitle">
+          从文献发现到论文发表，AI陪伴您的整个研究旅程<br>
+          让学术研究更智能、更高效、更愉悦
+        </p>
+        <div class="stats-grid" style="max-width: 800px; margin: 48px auto;">
+          <div class="stat-item animate-in delay-1">
+            <div class="stat-number">10x</div>
+            <div class="stat-label">文献检索效率提升</div>
+          </div>
+          <div class="stat-item animate-in delay-2">
+            <div class="stat-number">50%</div>
+            <div class="stat-label">写作时间缩短</div>
+          </div>
+          <div class="stat-item animate-in delay-3">
+            <div class="stat-number">1M+</div>
+            <div class="stat-label">学术论文索引</div>
+          </div>
+          <div class="stat-item animate-in delay-4">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">AI研究助手</div>
+          </div>
+        </div>
+        <div class="cta-buttons">
+          <a href="http://localhost:5173" target="_blank" class="cta-btn cta-btn-primary">开始演示 →</a>
+          <a href="#" class="cta-btn cta-btn-secondary" onclick="goToSlide(2)">了解更多</a>
+        </div>
+      </div>
+
+      <!-- Slide 2: Problem -->
+      <div class="slide" data-slide="2">
+        <h2 class="slide-title">研究人员的痛点</h2>
+        <p class="slide-subtitle">学术研究中的常见挑战</p>
+        <div class="slide-content">
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(245, 34, 45, 0.2);">🔍</div>
+            <h3>文献检索耗时</h3>
+            <p>研究人员平均每天花费2-3小时检索文献，却常常找不到最相关的论文</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(250, 140, 22, 0.2);">📝</div>
+            <h3>写作效率低下</h3>
+            <p>从大纲到成文需要数月时间，格式调整、引用管理占用大量精力</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(114, 46, 209, 0.2);">🤔</div>
+            <h3>知识整合困难</h3>
+            <p>面对海量文献，难以快速提取关键信息、发现研究趋势</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(24, 144, 255, 0.2);">👥</div>
+            <h3>协作不顺畅</h3>
+            <p>团队协作工具分散，版本管理混乱，沟通成本高</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Solution -->
+      <div class="slide" data-slide="3">
+        <h2 class="slide-title">ScholarForge 解决方案</h2>
+        <p class="slide-subtitle">AI驱动的全流程学术研究平台</p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker">1</div>
+            <div class="timeline-content">
+              <h4>智能文献发现</h4>
+              <p>基于AI的语义搜索和每日个性化推荐，让您不再错过重要文献。支持多源聚合（arXiv、Semantic Scholar、PubMed）</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker">2</div>
+            <div class="timeline-content">
+              <h4>AI研究助手</h4>
+              <p>基于您的文献库进行问答，生成文献综述，提供研究方法建议。支持多轮对话和深度推理</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker">3</div>
+            <div class="timeline-content">
+              <h4>智能写作辅助</h4>
+              <p>从大纲生成到AI续写，从引用管理到格式检查，全面提升写作效率</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker">4</div>
+            <div class="timeline-content">
+              <h4>团队协作与分享</h4>
+              <p>实时协作编辑、评论批注、版本管理，让团队合作更高效</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: Features 1 -->
+      <div class="slide" data-slide="4">
+        <h2 class="slide-title">核心功能 - 文献发现</h2>
+        <p class="slide-subtitle">让文献检索变得智能高效</p>
+        <div class="slide-content">
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(82, 196, 26, 0.2);">📰</div>
+            <h3>每日论文推荐</h3>
+            <p>基于您的研究兴趣和阅读历史，每天推送最相关的最新论文。支持兴趣标签管理和推荐反馈</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(24, 144, 255, 0.2);">🔎</div>
+            <h3>语义搜索</h3>
+            <p>支持自然语言查询，理解研究意图而非简单关键词匹配。混合BM25和向量检索，结果更精准</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(114, 46, 209, 0.2);">📚</div>
+            <h3>智能文献库</h3>
+            <p>自动提取PDF元数据，支持批注高亮、标签分类、智能文件夹管理</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(250, 140, 22, 0.2);">🌐</div>
+            <h3>知识图谱</h3>
+            <p>可视化文献关联网络，发现隐藏的研究连接和趋势</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 5: Features 2 -->
+      <div class="slide" data-slide="5">
+        <h2 class="slide-title">核心功能 - AI研究助手</h2>
+        <p class="slide-subtitle">您的24/7智能研究伙伴</p>
+        <div class="slide-content">
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(24, 144, 255, 0.2);">💬</div>
+            <h3>研究问答</h3>
+            <p>基于您的文献库进行智能问答，答案附带引用来源。支持多跳推理处理复杂问题</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(82, 196, 26, 0.2);">📄</div>
+            <h3>文献综述生成</h3>
+            <p>自动整合多篇文献，生成结构化的综述内容，按主题组织研究成果</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(114, 46, 209, 0.2);">🧠</div>
+            <h3>多跳推理</h3>
+            <p>处理需要多步推理的复杂问题，如"比较A方法和B方法在C场景下的优劣"</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(250, 140, 22, 0.2);">⚡</div>
+            <h3>多模型支持</h3>
+            <p>支持GPT-4、Claude、DeepSeek、阶跃星辰等主流模型，智能路由选择最优模型</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 6: Features 3 -->
+      <div class="slide" data-slide="6">
+        <h2 class="slide-title">核心功能 - 论文写作</h2>
+        <p class="slide-subtitle">从想法到成文的全流程支持</p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker" style="background: var(--success);">✓</div>
+            <div class="timeline-content">
+              <h4>智能大纲生成</h4>
+              <p>输入论文标题，AI自动生成结构完整的大纲框架，支持多种学术领域</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker" style="background: var(--success);">✓</div>
+            <div class="timeline-content">
+              <h4>AI写作辅助</h4>
+              <p>智能续写、改写润色、风格调整。支持学术写作规范和中英文切换</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker" style="background: var(--success);">✓</div>
+            <div class="timeline-content">
+              <h4>引用管理</h4>
+              <p>智能引用推荐，支持GB/T 7714、APA、MLA等多种格式，一键生成参考文献</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker" style="background: var(--success);">✓</div>
+            <div class="timeline-content">
+              <h4>质量检查</h4>
+              <p>内置查重检测、格式检查、语言润色，确保论文质量</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 7: Tech Stack -->
+      <div class="slide" data-slide="7">
+        <h2 class="slide-title">技术架构</h2>
+        <p class="slide-subtitle">现代化、可扩展的技术栈</p>
+        <div class="slide-content">
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(24, 144, 255, 0.2);">⚙️</div>
+            <h3>后端架构</h3>
+            <p>Python FastAPI + SQLAlchemy 2.0，支持PostgreSQL/MySQL。微服务架构，易于扩展</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(82, 196, 26, 0.2);">🎨</div>
+            <h3>前端技术</h3>
+            <p>React 18 + TypeScript + Vite，Ant Design组件库，BlockNote富文本编辑器</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(114, 46, 209, 0.2);">🤖</div>
+            <h3>AI能力</h3>
+            <p>RAG检索增强生成、混合搜索(BM25+向量)、多跳推理、Cross-Encoder重排序</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon" style="background: rgba(250, 140, 22, 0.2);">☁️</div>
+            <h3>部署方案</h3>
+            <p>支持本地部署、阿里云、AWS。Docker容器化，Terraform基础设施即代码</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 8: CTA -->
+      <div class="slide hero-slide" data-slide="8">
+        <h2 class="slide-title" style="font-size: 56px;">开始您的智能研究之旅</h2>
+        <p class="slide-subtitle">
+          ScholarForge 已准备就绪，等待您的体验<br>
+          让AI成为您的研究伙伴
+        </p>
+        <div class="stats-grid" style="max-width: 600px; margin: 48px auto;">
+          <div class="stat-item">
+            <div class="stat-number" style="font-size: 36px;">免费试用</div>
+            <div class="stat-label">14天完整功能体验</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" style="font-size: 36px;">无需信用卡</div>
+            <div class="stat-label">注册即可开始使用</div>
+          </div>
+        </div>
+        <div class="cta-buttons">
+          <a href="http://localhost:5173" target="_blank" class="cta-btn cta-btn-primary">立即体验 →</a>
+          <a href="mailto:support@scholarforge.io" class="cta-btn cta-btn-secondary">联系我们</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="nav-buttons">
+        <button class="btn" onclick="prevSlide()">← 上一页</button>
+        <button class="btn" onclick="toggleFullscreen()">⛶ 全屏</button>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width: 12.5%"></div>
+      </div>
+      <div class="nav-buttons">
+        <button class="btn btn-primary" onclick="nextSlide()">下一页 →</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 8;
+
+    function updateSlide() {
+      // Update slides
+      document.querySelectorAll('.slide').forEach(slide => {
+        slide.classList.remove('active', 'prev');
+        const slideNum = parseInt(slide.dataset.slide);
+        if (slideNum === currentSlide) {
+          slide.classList.add('active');
+        } else if (slideNum < currentSlide) {
+          slide.classList.add('prev');
+        }
+      });
+
+      // Update counter
+      document.getElementById('current-slide').textContent = currentSlide;
+
+      // Update progress
+      const progress = (currentSlide / totalSlides) * 100;
+      document.getElementById('progress-fill').style.width = progress + '%';
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function goToSlide(n) {
+      currentSlide = n;
+      updateSlide();
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      } else if (e.key === 'Escape') {
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        }
+      }
+    });
+
+    // Touch/swipe support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    document.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+    }
+
+    // Initialize
+    updateSlide();
+  </script>
+</body>
+</html>

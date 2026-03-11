@@ -1,0 +1,186 @@
+.roleManager {
+  padding: 16px;
+}
+
+.roleManager :global(.ant-card-head) {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.roleManager :global(.ant-card-head-title) {
+  color: white;
+  font-weight: 600;
+}
+
+.permissionMatrix {
+  margin-top: 16px;
+}
+
+.permissionMatrix :global(.ant-card-head) {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.permissionMatrix :global(.ant-card-head-title) {
+  color: white;
+  font-weight: 600;
+}
+
+.legend {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.userRoleAssignment {
+  margin-top: 16px;
+}
+
+.userRoleAssignment :global(.ant-card-head) {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+}
+
+.userRoleAssignment :global(.ant-card-head-title) {
+  color: white;
+  font-weight: 600;
+}
+
+.userEmail {
+  color: #999;
+  font-size: 12px;
+}
+
+.roleDescription {
+  margin-left: 8px;
+  color: #666;
+  font-size: 12px;
+}
+
+/* 权限管理页面整体样式 */
+.permissionPage {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.permissionPageHeader {
+  margin-bottom: 24px;
+}
+
+.permissionPageTitle {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.permissionPageSubtitle {
+  color: #666;
+  font-size: 14px;
+}
+
+/* 统计卡片样式 */
+.statsCard {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 20px;
+  color: white;
+  margin-bottom: 16px;
+}
+
+.statsCardValue {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.statsCardLabel {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* Tab样式 */
+.permissionTabs :global(.ant-tabs-nav) {
+  margin-bottom: 16px;
+}
+
+.permissionTabs :global(.ant-tabs-tab) {
+  padding: 12px 24px;
+  font-weight: 500;
+}
+
+.permissionTabs :global(.ant-tabs-tab-active) {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 表格样式优化 */
+.permissionTable :global(.ant-table-thead > tr > th) {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.permissionTable :global(.ant-table-tbody > tr:hover > td) {
+  background: #f0f5ff;
+}
+
+/* 操作按钮样式 */
+.actionButton {
+  opacity: 0.7;
+  transition: all 0.3s;
+}
+
+.actionButton:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* 标签样式 */
+.roleTag {
+  font-weight: 500;
+  padding: 2px 8px;
+}
+
+/* 模态框样式 */
+.permissionModal :global(.ant-modal-header) {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.permissionModal :global(.ant-modal-title) {
+  color: white;
+}
+
+/* Transfer组件样式优化 */
+.permissionTransfer :global(.ant-transfer-list) {
+  border-radius: 8px;
+  border: 1px solid #e8e8e8;
+}
+
+.permissionTransfer :global(.ant-transfer-list-header) {
+  background: #f8f9fa;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+/* Checkbox样式 */
+.permissionCheckbox {
+  transform: scale(1.2);
+}
+
+/* 响应式样式 */
+@media (max-width: 768px) {
+  .permissionPage {
+    padding: 12px;
+  }
+
+  .permissionPageTitle {
+    font-size: 20px;
+  }
+
+  .permissionMatrix :global(.ant-table) {
+    font-size: 12px;
+  }
+}

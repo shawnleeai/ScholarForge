@@ -231,4 +231,102 @@ export const templateService = {
     }
     return request.get('/templates/recommended')
   },
+
+  /**
+   * 获取筛选选项
+   */
+  getFilterOptions: async (): Promise<{ data: any }> => {
+    if (USE_MOCK) {
+      await new Promise(r => setTimeout(r, 100))
+      return {
+        data: {
+          types: [
+            { value: 'thesis', label: '学位论文' },
+            { value: 'journal', label: '期刊论文' },
+            { value: 'conference', label: '会议论文' },
+            { value: 'report', label: '研究报告' },
+            { value: 'proposal', label: '开题报告' },
+            { value: 'review', label: '综述文章' },
+          ],
+          institutions: ['浙江大学', 'IEEE', 'ACM', 'Nature', 'Science'],
+          disciplines: ['计算机科学', '工程学', '医学', '物理学', '经济学'],
+          languages: ['zh', 'en'],
+          difficulties: ['beginner', 'intermediate', 'advanced'],
+          tags: ['硕士', '博士', '本科', '英文', '中文', '理工科', '社科'],
+        }
+      }
+    }
+    return request.get('/templates/filters')
+  },
+
+  /**
+   * 获取收藏列表
+   */
+  getFavorites: async (): Promise<{ data: PaperTemplate[] }> => {
+    if (USE_MOCK) {
+      await new Promise(r => setTimeout(r, 100))
+      return { data: mockTemplates.slice(0, 2) }
+    }
+    return request.get('/templates/favorites/my')
+  },
+
+  /**
+   * 添加收藏
+   */
+  addFavorite: async (templateId: string): Promise<void> => {
+    if (USE_MOCK) {
+      await new Promise(r => setTimeout(r, 100))
+      return
+    }
+    await request.post(`/templates/${templateId}/favorite`)
+  },
+
+  /**
+   * 取消收藏
+   */
+  removeFavorite: async (templateId: string): Promise<void> => {
+    if (USE_MOCK) {
+      await new Promise(r => setTimeout(r, 100))
+      return
+    }
+    await request.delete(`/templates/${templateId}/favorite`)
+  },
+
+  /**
+   * 使用模板
+   */
+  useTemplate: async (templateId: string, data: { title: string }): Promise<any> => {
+    if (USE_MOCK) {
+      await new Promise(r => setTimeout(r, 300))
+      return { success: true }
+    }
+    return request.post(`/templates/${templateId}/use`, data)
+  },
+
+  /**
+   * AI填充模板
+   */
+  fillTemplateWithAI: async (templateId: string, data: any): Promise<any> => {
+    if (USE_MOCK) {
+      await new Promise(r => setTimeout(r, 2000))
+      return {
+        data: {
+          filled_sections: [
+            {
+              section_id: 's1',
+              section_title: '摘要',
+              content: '【AI生成的摘要内容示例】',
+              word_count: 800,
+              confidence: 0.85,
+              suggestions: ['建议补充更多研究细节'],
+              references: ['Smith, 2023'],
+            }
+          ],
+          total_word_count: 800,
+          estimated_quality: 0.82,
+        }
+      }
+    }
+    return request.post(`/templates/${templateId}/fill`, data)
+  },
 }

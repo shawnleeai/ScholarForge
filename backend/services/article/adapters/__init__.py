@@ -8,6 +8,7 @@ from .cnki import CNKIAdapter
 from .wos import WoSAdapter
 from .ieee import IEEEAdapter
 from .arxiv import ArxivAdapter
+from .semantic_scholar import SemanticScholarAdapter
 
 __all__ = [
     "BaseAdapter",
@@ -16,4 +17,5 @@ __all__ = [
     "WoSAdapter",
     "IEEEAdapter",
     "ArxivAdapter",
+    "SemanticScholarAdapter",
 ]

@@ -1,0 +1,49 @@
+{
+  "user": {
+    "id": "user-wangxm-001",
+    "name": "王小明",
+    "email": "wangxiaoming@zju.edu.cn",
+    "university": "浙江大学",
+    "department": "工程师学院",
+    "major": "工程管理（MEM）",
+    "grade": "2024级",
+    "research_interest": ["人工智能", "项目管理", "人机协同"],
+    "avatar": "/avatars/demo-user.png"
+  },
+  "thesis": {
+    "id": "paper-thesis-001",
+    "title": "基于多Agent协同的智能科研论文写作系统项目管理研究",
+    "keywords": ["Human-Agent Collaboration", "Multi-Agent Systems", "Project Management", "LLM"],
+    "abstract": "本研究以ScholarForge智能科研论文写作系统为研究对象，探索多Agent协同的项目管理机制。",
+    "pages": 85,
+    "words": 45000,
+    "status": "published",
+    "defense_score": "优秀"
+  },
+  "literature": {
+    "total_searched": 300,
+    "core_references": 58,
+    "read_count": 156,
+    "cited_count": 58,
+    "sources": {
+      "arxiv": 156,
+      "semantic_scholar": 203,
+      "ieee": 89,
+      "google_scholar": 421,
+      "cnki": 67
+    }
+  },
+  "system_usage": {
+    "topic_assistant_uses": 15,
+    "search_count": 48,
+    "ai_writing_words": 25000,
+    "collaboration_hours": 36,
+    "plagiarism_checks": 5
+  },
+  "paper_quality": {
+    "similarity_rate": 12.8,
+    "advisor_review": "优秀",
+    "blind_review": "AAB",
+    "defense_result": "优秀"
+  }
+}

@@ -1,0 +1,343 @@
+/* Notification Center Styles */
+
+.bellButton {
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+.bellButton:hover {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+}
+
+.dropdown {
+  width: 400px;
+}
+
+.notificationPanel {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.tabs {
+  flex: 1;
+}
+
+.tabs :global(.ant-tabs-nav) {
+  margin-bottom: 0;
+}
+
+.tabs :global(.ant-tabs-tab) {
+  padding: 8px 16px;
+}
+
+.panelActions {
+  display: flex;
+  gap: 8px;
+}
+
+.notificationList {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.skeletonList {
+  padding: 16px;
+}
+
+.notificationItem {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s;
+}
+
+.notificationItem:hover {
+  background: #f8f9fa;
+}
+
+.notificationItem.unread {
+  background: linear-gradient(90deg, rgba(102, 126, 234, 0.05) 0%, transparent 100%);
+}
+
+.notificationTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.unreadDot {
+  width: 8px;
+  height: 8px;
+  background: #ff4d4f;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.notificationContent {
+  font-size: 13px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.notificationMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.time {
+  font-size: 12px;
+}
+
+.list :global(.ant-list-item-action) {
+  margin-left: 16px;
+}
+
+.empty {
+  padding: 40px 0;
+}
+
+.panelFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-top: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.wsStatus {
+  font-size: 12px;
+}
+
+/* Notification Settings Styles */
+
+.settingsCard {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.settingsCard :global(.ant-card-head) {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.settingsCard :global(.ant-card-head-title) {
+  color: white;
+  font-weight: 600;
+}
+
+.channelSection {
+  margin-bottom: 32px;
+}
+
+.channelSection h4 {
+  margin-bottom: 16px;
+  font-size: 16px;
+  color: #333;
+}
+
+.channelGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.channelCard {
+  padding: 16px;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s;
+}
+
+.channelCard:hover {
+  border-color: #667eea;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+}
+
+.channelCard.active {
+  border-color: #52c41a;
+  background: rgba(82, 196, 26, 0.05);
+}
+
+.channelIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.channelInfo {
+  flex: 1;
+}
+
+.channelName {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.channelDesc {
+  font-size: 12px;
+  color: #999;
+}
+
+.preferenceTable {
+  width: 100%;
+}
+
+.preferenceTable th,
+.preferenceTable td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.preferenceTable th {
+  background: #f8f9fa;
+  font-weight: 500;
+}
+
+.notificationType {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.typeIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.typeName {
+  font-weight: 500;
+}
+
+.typeDesc {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Notification Page Styles */
+
+.notificationPage {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.pageTitle {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.pageActions {
+  display: flex;
+  gap: 12px;
+}
+
+.notificationFilter {
+  margin-bottom: 16px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.notificationCard {
+  margin-bottom: 12px;
+  border-radius: 12px;
+  transition: all 0.3s;
+}
+
+.notificationCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.notificationCard.unread {
+  border-left: 4px solid #667eea;
+}
+
+.notificationCard.read {
+  opacity: 0.8;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .dropdown {
+    width: 100vw;
+    left: 0 !important;
+    right: 0 !important;
+  }
+
+  .notificationPanel {
+    border-radius: 0;
+  }
+
+  .notificationList {
+    max-height: 60vh;
+  }
+
+  .panelHeader {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .panelActions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .channelGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .notificationPage {
+    padding: 12px;
+  }
+
+  .pageHeader {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+}

@@ -3,7 +3,7 @@
  * 支持多种图表类型、文件导入、样式自定义和高清导出
  */
 
-import React, { useState, useRef, useCallback } from 'react'
+import React, { useState, useRef, useCallback, lazy, Suspense } from 'react'
 import { Card, Form, Input, Button, Space, message, Divider, Select, ColorPicker, Upload, Dropdown, Tooltip, Row, Col, Slider, Switch } from 'antd'
 import {
   LineChartOutlined,
@@ -19,6 +19,7 @@ import {
   SyncOutlined,
 } from '@ant-design/icons'
 import type { UploadProps } from 'antd'
+import ReactECharts from 'echarts-for-react'
 
 import LineChart from './LineChart'
 import BarChart from './BarChart'
@@ -406,8 +407,6 @@ const ScatterChart: React.FC<{ data: ChartDataItem[]; title?: string; config?: R
   title,
   config = {},
 }) => {
-  const ReactECharts = require('echarts-for-react').default
-
   const option = {
     title: { text: title, left: 'center' },
     tooltip: { trigger: 'item' },
@@ -431,8 +430,6 @@ const RadarChart: React.FC<{ data: ChartDataItem[]; title?: string; config?: Rec
   title,
   config = {},
 }) => {
-  const ReactECharts = require('echarts-for-react').default
-
   const maxValue = Math.max(...data.map(d => d.y)) * 1.2
 
   const option = {

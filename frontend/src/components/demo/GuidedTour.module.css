@@ -1,0 +1,269 @@
+/* GuidedTour 样式 */
+
+/* 遮罩层 */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+  animation: fadeIn 0.3s ease;
+}
+
+/* 高亮区域 */
+.highlight {
+  position: fixed;
+  border: 2px solid #1890ff;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 4px rgba(24, 144, 255, 0.2),
+    0 0 0 9999px rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  pointer-events: none;
+  animation: pulse 2s infinite;
+}
+
+/* 提示框 */
+.tooltip {
+  position: fixed;
+  width: 320px;
+  z-index: 10000;
+  animation: slideIn 0.3s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.tooltip :global(.ant-card-head) {
+  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+  border-bottom: none;
+}
+
+.tooltip :global(.ant-card-head-title) {
+  color: #fff;
+}
+
+.tooltip :global(.ant-card-body) {
+  padding: 16px;
+}
+
+.tooltip :global(.ant-card-actions) {
+  background: #f5f5f5;
+  border-top: 1px solid #e8e8e8;
+}
+
+/* 头部 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header :global(.ant-btn) {
+  color: #fff;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.header :global(.ant-btn):hover {
+  opacity: 1;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* 操作按钮区域 */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 16px;
+}
+
+/* 步骤指示器 */
+.steps {
+  margin-top: 16px;
+}
+
+.steps :global(.ant-steps-item) {
+  flex: none;
+}
+
+.steps :global(.ant-steps-item-icon) {
+  width: 8px;
+  height: 8px;
+  min-width: 8px;
+  border-radius: 50%;
+  margin-top: 8px;
+}
+
+.steps :global(.ant-steps-item-process .ant-steps-item-icon) {
+  background: #1890ff;
+}
+
+.steps :global(.ant-steps-item-finish .ant-steps-item-icon) {
+  background: #52c41a;
+}
+
+.steps :global(.ant-steps-item-wait .ant-steps-item-icon) {
+  background: #d9d9d9;
+}
+
+.steps :global(.ant-steps-icon) {
+  display: none;
+}
+
+/* 演示模式徽章 */
+.demoBadge {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  background: linear-gradient(135deg, #722ed1 0%, #531dab 100%);
+  padding: 8px 16px;
+  border-radius: 20px;
+  z-index: 10001;
+  box-shadow: 0 4px 12px rgba(114, 46, 209, 0.3);
+  animation: slideDown 0.5s ease;
+}
+
+/* 高亮类 - 应用于目标元素 */
+:global(.tour-highlight) {
+  position: relative;
+  z-index: 9999;
+}
+
+/* 动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 4px rgba(24, 144, 255, 0.2),
+      0 0 0 9999px rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    box-shadow:
+      0 0 0 8px rgba(24, 144, 255, 0.1),
+      0 0 0 9999px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .tooltip {
+    width: calc(100vw - 32px);
+    left: 16px !important;
+    right: 16px !important;
+  }
+
+  .demoBadge {
+    top: auto;
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+    text-align: center;
+  }
+}
+
+/* 步骤内容样式 */
+.stepContent {
+  line-height: 1.6;
+  color: #595959;
+}
+
+.stepContent p {
+  margin-bottom: 8px;
+}
+
+.stepContent ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.stepContent li {
+  margin-bottom: 4px;
+}
+
+/* 完成动画 */
+.completeAnimation {
+  text-align: center;
+  padding: 24px;
+}
+
+.completeAnimation :global(.anticon) {
+  font-size: 48px;
+  color: #52c41a;
+  margin-bottom: 16px;
+}
+
+/* 演示启动器按钮 */
+.demoLauncher {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+}
+
+.demoLauncher :global(.ant-btn) {
+  height: 48px;
+  padding: 0 24px;
+  font-size: 16px;
+  border-radius: 24px;
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.4);
+  transition: all 0.3s;
+}
+
+.demoLauncher :global(.ant-btn):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(24, 144, 255, 0.5);
+}
+
+/* 暗色模式适配 */
+@media (prefers-color-scheme: dark) {
+  .tooltip {
+    background: #1f1f1f;
+  }
+
+  .tooltip :global(.ant-card-body) {
+    background: #1f1f1f;
+    color: #e8e8e8;
+  }
+
+  .tooltip :global(.ant-card-actions) {
+    background: #141414;
+    border-top-color: #303030;
+  }
+
+  .stepContent {
+    color: #a6a6a6;
+  }
+}

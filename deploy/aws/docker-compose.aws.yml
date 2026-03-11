@@ -1,0 +1,131 @@
+# AWS 生产环境部署配置
+# 使用 AWS RDS、ElastiCache、S3 服务
+
+version: '3.8'
+
+services:
+  # API 网关
+  gateway:
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scholarforge/gateway:latest
+    container_name: sf-gateway
+    environment:
+      - ENV=production
+      - DB_TYPE=postgresql
+      - DB_HOST=${AWS_DB_HOST}
+      - DB_PORT=5432
+      - DB_NAME=scholarforge
+      - DB_USER=${AWS_DB_USER}
+      - DB_PASSWORD=${AWS_DB_PASSWORD}
+      - DB_SSL_MODE=require
+      - REDIS_URL=${AWS_REDIS_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - S3_BUCKET=${AWS_S3_BUCKET}
+      - S3_REGION=${AWS_REGION}
+    ports:
+      - "8000:8000"
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+    restart: always
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: scholarforge-gateway
+        awslogs-region: ${AWS_REGION}
+        awslogs-stream-prefix: ecs
+
+  # AI 服务
+  ai-service:
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scholarforge/ai-service:latest
+    environment:
+      - ENV=production
+      - DB_TYPE=postgresql
+      - DB_HOST=${AWS_DB_HOST}
+      - DB_PORT=5432
+      - DB_NAME=scholarforge
+      - DB_USER=${AWS_DB_USER}
+      - DB_PASSWORD=${AWS_DB_PASSWORD}
+      - DB_SSL_MODE=require
+      - REDIS_URL=${AWS_REDIS_URL}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - COHERE_API_KEY=${COHERE_API_KEY}
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    restart: always
+
+  # 文献服务
+  article-service:
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scholarforge/article-service:latest
+    environment:
+      - ENV=production
+      - DB_TYPE=postgresql
+      - DB_HOST=${AWS_DB_HOST}
+      - DB_PORT=5432
+      - DB_NAME=scholarforge
+      - DB_USER=${AWS_DB_USER}
+      - DB_PASSWORD=${AWS_DB_PASSWORD}
+      - DB_SSL_MODE=require
+      - REDIS_URL=${AWS_REDIS_URL}
+      - S3_BUCKET=${AWS_S3_BUCKET}
+      - S3_REGION=${AWS_REGION}
+      - SEMANTIC_SCHOLAR_API_KEY=${SEMANTIC_SCHOLAR_API_KEY}
+    deploy:
+      replicas: 2
+    restart: always
+
+  # 推荐服务
+  recommendation-service:
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scholarforge/recommendation-service:latest
+    environment:
+      - ENV=production
+      - DB_TYPE=postgresql
+      - DB_HOST=${AWS_DB_HOST}
+      - DB_PORT=5432
+      - DB_NAME=scholarforge
+      - DB_USER=${AWS_DB_USER}
+      - DB_PASSWORD=${AWS_DB_PASSWORD}
+      - REDIS_URL=${AWS_REDIS_URL}
+      - CELERY_BROKER_URL=${AWS_REDIS_URL}
+    deploy:
+      replicas: 1
+    restart: always
+
+  # Celery Worker
+  celery-worker:
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scholarforge/celery-worker:latest
+    environment:
+      - ENV=production
+      - DB_TYPE=postgresql
+      - DB_HOST=${AWS_DB_HOST}
+      - DB_PORT=5432
+      - DB_NAME=scholarforge
+      - DB_USER=${AWS_DB_USER}
+      - DB_PASSWORD=${AWS_DB_PASSWORD}
+      - REDIS_URL=${AWS_REDIS_URL}
+      - CELERY_BROKER_URL=${AWS_REDIS_URL}
+    deploy:
+      replicas: 2
+    restart: always
+
+  # Celery Beat
+  celery-beat:
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scholarforge/celery-beat:latest
+    environment:
+      - ENV=production
+      - DB_TYPE=postgresql
+      - DB_HOST=${AWS_DB_HOST}
+      - DB_PORT=5432
+      - DB_NAME=scholarforge
+      - DB_USER=${AWS_DB_USER}
+      - DB_PASSWORD=${AWS_DB_PASSWORD}
+      - REDIS_URL=${AWS_REDIS_URL}
+      - CELERY_BROKER_URL=${AWS_REDIS_URL}
+    restart: always

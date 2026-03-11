@@ -4,7 +4,7 @@
 """
 
 from .base import Base, BaseModel, TimestampMixin
-from .connection import DatabaseManager, get_db_session, get_db, db_manager
+from .connection import DatabaseManager, get_db_session, get_db, get_db_context, db_manager
 from .config import DatabaseConfig, DatabaseType
 
 # 兼容旧版API - 提供init_db和close_db
@@ -33,6 +33,7 @@ __all__ = [
     "db_manager",
     "get_db_session",
     "get_db",
+    "get_db_context",
     "DatabaseConfig",
     "DatabaseType",
     "init_db",

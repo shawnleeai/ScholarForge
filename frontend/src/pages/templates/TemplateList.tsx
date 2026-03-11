@@ -1,362 +1,527 @@
 /**
- * 模板管理页面
+ * 模板列表页面（增强版）
+ * 支持搜索、筛选、推荐和AI填充
  */
 
 import React, { useState, useEffect, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
 import {
   Card,
-  Row,
-  Col,
   Input,
-  Select,
-  Tabs,
+  Button,
+  List,
   Typography,
   Space,
   Tag,
-  Button,
-  Rate,
   Empty,
   Spin,
+  Pagination,
+  Row,
+  Col,
+  Tooltip,
+  Badge,
   message,
-  Breadcrumb,
-  Modal,
+  BackTop,
 } from 'antd'
 import {
   SearchOutlined,
-  DownloadOutlined,
   StarOutlined,
-  FileTextOutlined,
-  BookOutlined,
-  TeamOutlined,
-  LineChartOutlined,
-  HomeOutlined,
+  StarFilled,
+  DownloadOutlined,
+  EyeOutlined,
+  RobotOutlined,
+  AppstoreOutlined,
+  BarsOutlined,
 } from '@ant-design/icons'
-
-import { templateService, type PaperTemplate } from '@/services/templateService'
-import styles from './Templates.module.css'
+import { useNavigate } from 'react-router-dom'
+import TemplatePreview from '../../components/template/TemplatePreview'
+import AITemplateFill from '../../components/template/AITemplateFill'
+import TemplateCategories from '../../components/template/TemplateCategories'
+import { templateService } from '../../services/templateService'
+import styles from './TemplateList.module.css'
 
 const { Title, Text, Paragraph } = Typography
-const { Option } = Select
+const { Search } = Input
+
+interface FilterState {
+  type?: string
+  institution?: string
+  discipline?: string
+  language?: string
+  difficulty?: string
+  tags: string[]
+  sortBy: string
+}
 
 const TemplateList: React.FC = () => {
   const navigate = useNavigate()
+  const [templates, setTemplates] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
-  const [templates, setTemplates] = useState<PaperTemplate[]>([])
-  const [keyword, setKeyword] = useState('')
-  const [typeFilter, setTypeFilter] = useState<string>()
-  const [selectedTemplate, setSelectedTemplate] = useState<PaperTemplate | null>(null)
-  const [previewVisible, setPreviewVisible] = useState(false)
-  const [creating, setCreating] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [filter, setFilter] = useState<FilterState>({
+    tags: [],
+    sortBy: 'relevance',
+  })
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 12,
+    total: 0,
+  })
+  const [filterOptions, setFilterOptions] = useState({
+    types: [],
+    institutions: [],
+    disciplines: [],
+    languages: [],
+    difficulties: [],
+    tags: [],
+  })
 
-  // 加载模板
-  const loadTemplates = useCallback(async () => {
+  // 模态框状态
+  const [previewVisible, setPreviewVisible] = useState(false)
+  const [aiFillVisible, setAiFillVisible] = useState(false)
+  const [selectedTemplate, setSelectedTemplate] = useState<any>(null)
+  const [favorites, setFavorites] = useState<string[]>([])
+
+  // 视图模式
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
+
+  // 获取模板列表
+  const fetchTemplates = useCallback(async () => {
     setLoading(true)
     try {
       const response = await templateService.getTemplates({
-        type: typeFilter,
-        keyword,
+        keyword: searchQuery,
+        type: filter.type,
+        institution: filter.institution,
+        page: pagination.current,
+        pageSize: pagination.pageSize,
+        sortBy: filter.sortBy,
       })
-      setTemplates(response.data)
+      setTemplates(response.data || [])
+      setPagination((prev) => ({
+        ...prev,
+        total: response.total || 0,
+      }))
     } catch (error) {
-      console.error('Failed to load templates:', error)
+      message.error('获取模板列表失败')
     } finally {
       setLoading(false)
     }
-  }, [typeFilter, keyword])
+  }, [searchQuery, filter, pagination.current, pagination.pageSize])
+
+  // 获取筛选选项
+  const fetchFilterOptions = useCallback(async () => {
+    try {
+      const response = await templateService.getFilterOptions()
+      setFilterOptions(response.data || {
+        types: [],
+        institutions: [],
+        disciplines: [],
+        languages: [],
+        difficulties: [],
+        tags: [],
+      })
+    } catch (error) {
+      console.error('获取筛选选项失败', error)
+    }
+  }, [])
+
+  // 获取收藏列表
+  const fetchFavorites = useCallback(async () => {
+    try {
+      const response = await templateService.getFavorites()
+      setFavorites((response.data || []).map((t: any) => t.id))
+    } catch (error) {
+      console.error('获取收藏列表失败', error)
+    }
+  }, [])
 
   useEffect(() => {
-    loadTemplates()
-  }, [loadTemplates])
+    fetchTemplates()
+  }, [fetchTemplates])
 
-  // 使用模板创建论文
-  const handleUseTemplate = async (template: PaperTemplate) => {
+  useEffect(() => {
+    fetchFilterOptions()
+    fetchFavorites()
+  }, [fetchFilterOptions, fetchFavorites])
+
+  const handleSearch = (value: string) => {
+    setSearchQuery(value)
+    setPagination((prev) => ({ ...prev, current: 1 }))
+  }
+
+  const handleFilterChange = (newFilter: Partial<FilterState>) => {
+    setFilter((prev) => ({ ...prev, ...newFilter }))
+    setPagination((prev) => ({ ...prev, current: 1 }))
+  }
+
+  const handleResetFilter = () => {
+    setFilter({ tags: [], sortBy: 'relevance' })
+    setSearchQuery('')
+    setPagination((prev) => ({ ...prev, current: 1 }))
+  }
+
+  const handlePageChange = (page: number, pageSize?: number) => {
+    setPagination((prev) => ({
+      ...prev,
+      current: page,
+      pageSize: pageSize || prev.pageSize,
+    }))
+  }
+
+  const openPreview = (template: any) => {
     setSelectedTemplate(template)
     setPreviewVisible(true)
   }
 
-  const handleCreatePaper = async (title: string) => {
-    if (!selectedTemplate) return
-    setCreating(true)
+  const closePreview = () => {
+    setPreviewVisible(false)
+    setSelectedTemplate(null)
+  }
+
+  const openAiFill = (template: any) => {
+    setSelectedTemplate(template)
+    setAiFillVisible(true)
+  }
+
+  const closeAiFill = () => {
+    setAiFillVisible(false)
+  }
+
+  const handleUseTemplate = async (template: any) => {
     try {
-      const response = await templateService.createPaperFromTemplate(selectedTemplate.id, { title })
-      message.success('论文创建成功')
-      setPreviewVisible(false)
-      navigate(`/papers/${response.data.paperId}`)
+      await templateService.useTemplate(template.id, {
+        title: `使用${template.name}创建的论文`,
+      })
+      message.success('已开始使用模板创建论文')
+      navigate(`/papers/new?template=${template.id}`)
     } catch (error) {
-      message.error('创建失败')
-    } finally {
-      setCreating(false)
+      message.error('使用模板失败')
     }
   }
 
-  // 获取类型图标
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'thesis': return <BookOutlined />
-      case 'journal': return <FileTextOutlined />
-      case 'conference': return <TeamOutlined />
-      case 'report': return <LineChartOutlined />
-      default: return <FileTextOutlined />
+  const handleFavorite = async (templateId: string, isFavorite: boolean) => {
+    try {
+      if (isFavorite) {
+        await templateService.addFavorite(templateId)
+        setFavorites((prev) => [...prev, templateId])
+        message.success('已添加到收藏')
+      } else {
+        await templateService.removeFavorite(templateId)
+        setFavorites((prev) => prev.filter((id) => id !== templateId))
+        message.success('已取消收藏')
+      }
+    } catch (error) {
+      message.error('操作失败')
     }
   }
 
-  // 获取类型名称
-  const getTypeName = (type: string) => {
-    switch (type) {
-      case 'thesis': return '学位论文'
-      case 'journal': return '期刊论文'
-      case 'conference': return '会议论文'
-      case 'report': return '报告'
-      default: return '其他'
-    }
+  const handleAiFillComplete = (results: any[]) => {
+    message.success(`成功生成 ${results.length} 个章节内容`)
+    setAiFillVisible(false)
   }
 
-  const tabItems = [
-    {
-      key: 'all',
-      label: '全部模板',
-    },
-    {
-      key: 'thesis',
-      label: '学位论文',
-    },
-    {
-      key: 'journal',
-      label: '期刊论文',
-    },
-    {
-      key: 'conference',
-      label: '会议论文',
-    },
-  ]
+  const getTypeLabel = (type: string) => {
+    const labels: Record<string, string> = {
+      thesis: '学位论文',
+      journal: '期刊论文',
+      conference: '会议论文',
+      report: '研究报告',
+      proposal: '开题报告',
+      review: '综述文章',
+      book: '书籍章节',
+    }
+    return labels[type] || type
+  }
 
-  return (
-    <div className={styles.templateList}>
-      {/* 面包屑 */}
-      <Breadcrumb
-        items={[
-          { href: '/dashboard', title: <><HomeOutlined /> 首页</> },
-          { title: '模板中心' },
-        ]}
-        style={{ marginBottom: 16 }}
-      />
-
-      {/* 页面标题 */}
-      <div className={styles.pageHeader}>
-        <Title level={3}>模板中心</Title>
-        <Text type="secondary">
-          选择合适的模板快速开始您的论文写作
-        </Text>
-      </div>
-
-      {/* 搜索和筛选 */}
-      <Card className={styles.filterCard}>
-        <Row gutter={16} align="middle">
-          <Col flex="auto">
-            <Input
-              placeholder="搜索模板..."
-              prefix={<SearchOutlined />}
-              value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
-              allowClear
-              size="large"
-            />
-          </Col>
-          <Col>
-            <Select
-              placeholder="模板类型"
-              value={typeFilter}
-              onChange={setTypeFilter}
-              allowClear
-              style={{ width: 150 }}
-              size="large"
-            >
-              <Option value="thesis">学位论文</Option>
-              <Option value="journal">期刊论文</Option>
-              <Option value="conference">会议论文</Option>
-              <Option value="report">报告</Option>
-            </Select>
-          </Col>
-        </Row>
-      </Card>
-
-      {/* 分类标签 */}
-      <Tabs
-        items={tabItems}
-        onChange={(key) => setTypeFilter(key === 'all' ? undefined : key)}
-        className={styles.tabs}
-      />
-
-      {/* 模板列表 */}
-      {loading ? (
-        <div className={styles.loading}>
-          <Spin size="large" />
-        </div>
-      ) : templates.length === 0 ? (
-        <Empty description="没有找到匹配的模板" />
-      ) : (
-        <Row gutter={[16, 16]}>
-          {templates.map((template) => (
-            <Col key={template.id} xs={24} sm={12} lg={8} xl={6}>
-              <TemplateCard
-                template={template}
-                onUse={() => handleUseTemplate(template)}
-              />
-            </Col>
-          ))}
-        </Row>
-      )}
-
-      {/* 模板预览弹窗 */}
-      <Modal
-        title={`使用模板: ${selectedTemplate?.name || ''}`}
-        open={previewVisible}
-        onCancel={() => setPreviewVisible(false)}
-        footer={null}
-        width={600}
-      >
-        {selectedTemplate && (
-          <TemplatePreview
-            template={selectedTemplate}
-            onCreate={handleCreatePaper}
-            loading={creating}
-          />
-        )}
-      </Modal>
-    </div>
-  )
-}
-
-// 模板卡片组件
-interface TemplateCardProps {
-  template: PaperTemplate
-  onUse: () => void
-}
-
-const TemplateCard: React.FC<TemplateCardProps> = ({ template, onUse }) => {
   const getTypeColor = (type: string) => {
-    switch (type) {
-      case 'thesis': return 'blue'
-      case 'journal': return 'green'
-      case 'conference': return 'orange'
-      case 'report': return 'purple'
-      default: return 'default'
+    const colors: Record<string, string> = {
+      thesis: 'blue',
+      journal: 'green',
+      conference: 'purple',
+      report: 'orange',
+      proposal: 'cyan',
+      review: 'magenta',
+      book: 'gold',
     }
+    return colors[type] || 'default'
   }
 
-  return (
+  // 网格视图卡片
+  const renderGridCard = (template: any) => (
     <Card
-      className={styles.templateCard}
       hoverable
+      className={styles.templateCard}
       cover={
         <div className={styles.cardCover}>
-          <FileTextOutlined className={styles.coverIcon} />
+          <div className={styles.coverPlaceholder}>
+            <Text type="secondary">{template.name.slice(0, 2)}</Text>
+          </div>
+          <div className={styles.cardActions}>
+            <Tooltip title="预览">
+              <Button
+                type="primary"
+                shape="circle"
+                icon={<EyeOutlined />}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  openPreview(template)
+                }}
+              />
+            </Tooltip>
+            {template.sections?.some((s: any) => s.ai_guidance) && (
+              <Tooltip title="AI填充">
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon={<RobotOutlined />}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    openAiFill(template)
+                  }}
+                />
+              </Tooltip>
+            )}
+          </div>
+          <div className={styles.cardBadge}>
+            {favorites.includes(template.id) && (
+              <StarFilled style={{ color: '#faad14', fontSize: 20 }} />
+            )}
+          </div>
         </div>
       }
-      onClick={onUse}
+      onClick={() => openPreview(template)}
     >
       <div className={styles.cardContent}>
-        <div className={styles.cardHeader}>
-          <Text strong ellipsis className={styles.cardTitle}>
-            {template.name}
-          </Text>
-          <Tag color={getTypeColor(template.type)} icon={getTypeIcon(template.type)}>
-            {getTypeName(template.type)}
-          </Tag>
-        </div>
-
-        <Paragraph
-          type="secondary"
-          ellipsis={{ rows: 2 }}
-          className={styles.cardDesc}
-        >
+        <Space wrap size="small">
+          <Tag color={getTypeColor(template.type)}>{getTypeLabel(template.type)}</Tag>
+          {template.institution && <Tag>{template.institution}</Tag>}
+        </Space>
+        <Title level={5} className={styles.cardTitle} ellipsis={{ rows: 1 }}>
+          {template.name}
+        </Title>
+        <Paragraph type="secondary" className={styles.cardDesc} ellipsis={{ rows: 2 }}>
           {template.description}
         </Paragraph>
-
-        <div className={styles.cardTags}>
-          {template.tags.slice(0, 3).map((tag) => (
-            <Tag key={tag} className={styles.tag}>
-              {tag}
+        <div className={styles.cardMeta}>
+          <Space wrap size="small">
+            <Tag icon={<StarOutlined />} color="gold">
+              {template.stats?.rating || 0}
             </Tag>
-          ))}
-        </div>
-
-        <div className={styles.cardFooter}>
-          <Space>
-            <Rate disabled defaultValue={template.rating} allowHalf className={styles.rate} />
-            <Text type="secondary" style={{ fontSize: 12 }}>
-              {template.rating}
-            </Text>
-          </Space>
-          <Space>
-            <DownloadOutlined />
-            <Text type="secondary" style={{ fontSize: 12 }}>
-              {template.downloadCount}
-            </Text>
+            <Tag icon={<DownloadOutlined />}>
+              {template.stats?.download_count || 0}
+            </Tag>
           </Space>
         </div>
       </div>
     </Card>
   )
-}
 
-// 模板预览组件
-interface TemplatePreviewProps {
-  template: PaperTemplate
-  onCreate: (title: string) => void
-  loading: boolean
-}
-
-const TemplatePreview: React.FC<TemplatePreviewProps> = ({ template, onCreate, loading }) => {
-  const [title, setTitle] = useState('')
-
-  return (
-    <div className={styles.preview}>
-      <div className={styles.previewInfo}>
-        <Text strong>{template.name}</Text>
-        <Paragraph type="secondary">{template.description}</Paragraph>
-      </div>
-
-      <div className={styles.previewSections}>
-        <Text type="secondary">模板结构:</Text>
-        <ul className={styles.sectionList}>
-          {template.sections.map((section) => (
-            <li key={section.id}>
-              <Space>
-                {section.required && <Tag color="red">必填</Tag>}
-                <span>{section.title}</span>
-              </Space>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className={styles.previewFormat}>
-        <Text type="secondary">格式设置:</Text>
-        <Space wrap style={{ marginTop: 8 }}>
-          <Tag>字体: {template.format.fontFamily}</Tag>
-          <Tag>字号: {template.format.fontSize}pt</Tag>
-          <Tag>行距: {template.format.lineHeight}</Tag>
+  // 列表视图行
+  const renderListItem = (template: any) => (
+    <List.Item
+      className={styles.listItem}
+      actions={[
+        <Button
+          type="text"
+          icon={favorites.includes(template.id) ? <StarFilled style={{ color: '#faad14' }} /> : <StarOutlined />}
+          onClick={() => handleFavorite(template.id, !favorites.includes(template.id))}
+        >
+          收藏
+        </Button>,
+        <Button type="primary" icon={<DownloadOutlined />} onClick={() => handleUseTemplate(template)}>
+          使用
+        </Button>,
+      ]}
+    >
+      <List.Item.Meta
+        title={
+          <Space>
+            <a onClick={() => openPreview(template)}>{template.name}</a>
+            <Tag color={getTypeColor(template.type)}>{getTypeLabel(template.type)}</Tag>
+            {template.sections?.some((s: any) => s.ai_guidance) && (
+              <Tooltip title="支持AI辅助写作">
+                <RobotOutlined style={{ color: '#52c41a' }} />
+              </Tooltip>
+            )}
+          </Space>
+        }
+        description={
+          <Space direction="vertical" size="small" style={{ width: '100%' }}>
+            <Text type="secondary" ellipsis>
+              {template.description}
+            </Text>
+            <Space wrap>
+              {template.institution && <Tag size="small">{template.institution}</Tag>}
+              {template.tags?.slice(0, 3).map((tag: string) => (
+                <Tag key={tag} size="small">
+                  {tag}
+                </Tag>
+              ))}
+            </Space>
+          </Space>
+        }
+      />
+      <div className={styles.listStats}>
+        <Space>
+          <Badge count={template.stats?.rating?.toFixed(1)} style={{ backgroundColor: '#faad14' }} />
+          <Text type="secondary">{template.stats?.download_count} 次下载</Text>
         </Space>
       </div>
+    </List.Item>
+  )
 
-      <div className={styles.previewActions}>
-        <Input
-          placeholder="输入论文标题"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          style={{ marginBottom: 12 }}
-        />
-        <Button
-          type="primary"
-          block
-          onClick={() => onCreate(title || '未命名论文')}
-          loading={loading}
-        >
-          使用此模板创建论文
-        </Button>
+  return (
+    <div className={styles.container}>
+      {/* 页面头部 */}
+      <div className={styles.header}>
+        <div className={styles.headerContent}>
+          <Title level={2}>论文模板库</Title>
+          <Paragraph type="secondary">
+            选择适合您的论文模板，支持AI智能填充，快速开始学术写作
+          </Paragraph>
+        </div>
+        <div className={styles.headerStats}>
+          <Space size="large">
+            <div className={styles.statItem}>
+              <Text strong className={styles.statNumber}>
+                {pagination.total}
+              </Text>
+              <Text type="secondary">模板总数</Text>
+            </div>
+            <div className={styles.statItem}>
+              <Text strong className={styles.statNumber}>
+                {favorites.length}
+              </Text>
+              <Text type="secondary">我的收藏</Text>
+            </div>
+          </Space>
+        </div>
       </div>
+
+      {/* 搜索栏 */}
+      <div className={styles.searchBar}>
+        <Search
+          placeholder="搜索模板名称、机构、标签..."
+          allowClear
+          enterButton={<Button type="primary" icon={<SearchOutlined />}>搜索</Button>}
+          size="large"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onSearch={handleSearch}
+          className={styles.searchInput}
+        />
+      </div>
+
+      {/* 主内容区 */}
+      <Row gutter={24} className={styles.mainContent}>
+        {/* 左侧筛选 */}
+        <Col span={6}>
+          <TemplateCategories
+            filterOptions={filterOptions}
+            currentFilter={filter}
+            onFilterChange={handleFilterChange}
+            onReset={handleResetFilter}
+            resultCount={pagination.total}
+          />
+        </Col>
+
+        {/* 右侧列表 */}
+        <Col span={18}>
+          <Card
+            className={styles.listCard}
+            title={
+              <div className={styles.listHeader}>
+                <Space>
+                  <Text strong>模板列表</Text>
+                  <Text type="secondary">共 {pagination.total} 个</Text>
+                </Space>
+                <Space>
+                  <Button.Group>
+                    <Button
+                      type={viewMode === 'grid' ? 'primary' : 'default'}
+                      icon={<AppstoreOutlined />}
+                      onClick={() => setViewMode('grid')}
+                    >
+                      网格
+                    </Button>
+                    <Button
+                      type={viewMode === 'list' ? 'primary' : 'default'}
+                      icon={<BarsOutlined />}
+                      onClick={() => setViewMode('list')}
+                    >
+                      列表
+                    </Button>
+                  </Button.Group>
+                </Space>
+              </div>
+            }
+          >
+            <Spin spinning={loading}>
+              {templates.length > 0 ? (
+                <>
+                  {viewMode === 'grid' ? (
+                    <Row gutter={[16, 16]}>
+                      {templates.map((template) => (
+                        <Col key={template.id} span={8}>
+                          {renderGridCard(template)}
+                        </Col>
+                      ))}
+                    </Row>
+                  ) : (
+                    <List
+                      dataSource={templates}
+                      renderItem={renderListItem}
+                      split
+                    />
+                  )}
+
+                  {/* 分页 */}
+                  <div className={styles.pagination}>
+                    <Pagination
+                      current={pagination.current}
+                      pageSize={pagination.pageSize}
+                      total={pagination.total}
+                      onChange={handlePageChange}
+                      showSizeChanger
+                      showQuickJumper
+                      showTotal={(total) => `共 ${total} 个模板`}
+                    />
+                  </div>
+                </>
+              ) : (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description="暂无符合条件的模板"
+                >
+                  <Button type="primary" onClick={handleResetFilter}>
+                    重置筛选条件
+                  </Button>
+                </Empty>
+              )}
+            </Spin>
+          </Card>
+        </Col>
+      </Row>
+
+      {/* 模板预览弹窗 */}
+      <TemplatePreview
+        template={selectedTemplate}
+        visible={previewVisible}
+        onClose={closePreview}
+        onUse={handleUseTemplate}
+        onFavorite={handleFavorite}
+        isFavorite={selectedTemplate ? favorites.includes(selectedTemplate.id) : false}
+      />
+
+      {/* AI填充弹窗 */}
+      <AITemplateFill
+        template={selectedTemplate}
+        visible={aiFillVisible}
+        onClose={closeAiFill}
+        onComplete={handleAiFillComplete}
+      />
+
+      <BackTop />
     </div>
   )
 }

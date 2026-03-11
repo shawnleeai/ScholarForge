@@ -1,0 +1,56 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px 48px;
+}
+
+.form {
+  margin-top: 24px;
+}
+
+.tabs {
+  margin-bottom: 24px;
+}
+
+.tabs :global(.ant-tabs-content) {
+  padding-top: 16px;
+}
+
+.sourceGroup {
+  width: 100%;
+}
+
+.sourceCard {
+  height: 100%;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.sourceCard:hover {
+  border-color: #1890ff;
+}
+
+.actions {
+  margin-top: 32px;
+  padding: 24px;
+  background: #f6ffed;
+  border: 1px solid #b7eb8f;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.preview {
+  background: #f0f5ff;
+}
+
+.preview :global(.ant-card-head) {
+  background: #e6f7ff;
+  border-bottom-color: #91d5ff;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 16px 32px;
+  }
+}

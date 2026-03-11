@@ -1,0 +1,55 @@
+.container {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.statsCard {
+  margin-bottom: 24px;
+}
+
+.tableCard {
+  min-height: 500px;
+}
+
+.tableHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.typeIcon {
+  font-size: 24px;
+}
+
+.datasetName {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.datasetDesc {
+  font-size: 12px;
+  color: #666;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.detailSection {
+  margin-bottom: 24px;
+}
+
+.detailStats {
+  padding: 24px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}

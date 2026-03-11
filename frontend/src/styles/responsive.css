@@ -1,0 +1,185 @@
+/**
+ * 全局响应式样式
+ * 移动端适配
+ */
+
+/* 移动端基础样式 */
+@media (max-width: 768px) {
+  /* 布局调整 */
+  .ant-layout-content {
+    padding: 12px !important;
+  }
+
+  /* 卡片适配 */
+  .ant-card {
+    margin-bottom: 12px;
+  }
+
+  .ant-card-head-title {
+    font-size: 14px;
+  }
+
+  /* 表格适配 */
+  .ant-table {
+    font-size: 12px;
+  }
+
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td {
+    padding: 8px !important;
+  }
+
+  /* 表单单行显示 */
+  .ant-form-item {
+    margin-bottom: 16px;
+  }
+
+  .ant-form-item-label {
+    padding-bottom: 4px;
+  }
+
+  /* 按钮全宽 */
+  .ant-btn-block-mobile {
+    width: 100%;
+  }
+
+  /* 列表适配 */
+  .ant-list-item {
+    padding: 12px !important;
+  }
+
+  /* 抽屉全屏 */
+  .ant-drawer-content-wrapper {
+    width: 100% !important;
+  }
+
+  /* 弹窗适配 */
+  .ant-modal {
+    max-width: calc(100vw - 32px);
+    margin: 16px auto;
+  }
+
+  /* Tab 滚动 */
+  .ant-tabs-nav-wrap {
+    overflow-x: auto;
+  }
+
+  /* 隐藏大屏幕上显示的元素 */
+  .hide-on-mobile {
+    display: none !important;
+  }
+
+  /* 移动端显示的元素 */
+  .show-on-mobile {
+    display: block !important;
+  }
+
+  /* 字体大小调整 */
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 20px !important;
+  }
+
+  h2 {
+    font-size: 18px !important;
+  }
+
+  h3 {
+    font-size: 16px !important;
+  }
+
+  /* 间距调整 */
+  .ant-space {
+    gap: 8px !important;
+  }
+
+  /* 栅格系统 */
+  .ant-col {
+    padding: 4px !important;
+  }
+
+  /* 导航菜单 */
+  .ant-menu-item {
+    padding: 0 16px !important;
+  }
+
+  /* 下拉菜单 */
+  .ant-dropdown-menu {
+    max-width: 280px;
+  }
+}
+
+/* 平板适配 */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .ant-layout-content {
+    padding: 16px !important;
+  }
+
+  .hide-on-tablet {
+    display: none !important;
+  }
+}
+
+/* 桌面端 */
+@media (min-width: 1025px) {
+  .show-on-mobile,
+  .show-on-tablet {
+    display: none !important;
+  }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) and (pointer: coarse) {
+  .ant-btn {
+    min-height: 36px;
+  }
+
+  .ant-input,
+  .ant-select-selector {
+    min-height: 40px;
+  }
+
+  .ant-list-item {
+    cursor: pointer;
+  }
+}
+
+/* 小屏幕手机 */
+@media (max-width: 375px) {
+  .ant-layout-content {
+    padding: 8px !important;
+  }
+
+  .ant-card {
+    margin-bottom: 8px;
+  }
+
+  body {
+    font-size: 13px;
+  }
+}
+
+/* 横屏模式 */
+@media (max-height: 500px) and (orientation: landscape) {
+  .ant-modal {
+    top: 20px;
+  }
+
+  .ant-drawer-content-wrapper {
+    height: 100vh !important;
+  }
+}
+
+/* 安全区域适配（刘海屏） */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .ant-layout-header {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .ant-layout-footer {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}

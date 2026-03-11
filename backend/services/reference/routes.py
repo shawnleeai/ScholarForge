@@ -550,23 +550,24 @@ async def import_references(
     os.makedirs(upload_dir, exist_ok=True)
     file_path = os.path.join(upload_dir, f"{uuid.uuid4()}_{file.filename}")
 
-    with open(file_path, "wb") as f:
-        shutil.copyfileobj(file.file, f)
-
-    # 创建导入任务
-    task = await import_task_repo.create({
-        'user_id': user_id,
-        'paper_id': paper_id,
-        'source_type': source_type,
-        'file_name': file.filename,
-        'file_path': file_path,
-        'status': 'processing'
-    })
-
-    # 使用新的导入适配器
-    from .import_adapters import ImportAdapterFactory
-
     try:
+        # 保存上传文件
+        with open(file_path, "wb") as f:
+            shutil.copyfileobj(file.file, f)
+
+        # 创建导入任务
+        task = await import_task_repo.create({
+            'user_id': user_id,
+            'paper_id': paper_id,
+            'source_type': source_type,
+            'file_name': file.filename,
+            'file_path': file_path,
+            'status': 'processing'
+        })
+
+        # 使用新的导入适配器
+        from .import_adapters import ImportAdapterFactory
+
         # 读取文件内容
         with open(file_path, 'rb') as f:
             content = f.read()
@@ -625,13 +626,24 @@ async def import_references(
         )
 
     except Exception as e:
-        await import_task_repo.update_status(
-            task['id'],
-            'failed',
-            {'error_message': str(e)}
-        )
-        await db.commit()
+        # 更新任务失败状态
+        try:
+            await import_task_repo.update_status(
+                task['id'],
+                'failed',
+                {'error_message': str(e)}
+            )
+            await db.commit()
+        except Exception:
+            pass  # 任务创建失败时忽略
         raise ValidationException(f"导入失败: {str(e)}")
+    finally:
+        # 清理临时文件
+        if os.path.exists(file_path):
+            try:
+                os.remove(file_path)
+            except Exception:
+                pass  # 文件清理失败不影响主流程
 
 
 @router.post("/import/zotero", summary="从 Zotero 导入")
@@ -818,6 +830,101 @@ async def extract_metadata(
         raise ValidationException("请提供DOI、PMID或文本")
 
     return success_response(data=result.model_dump())
+
+
+# ============== 智能引用推荐 ==============
+
+@router.post("/recommend", summary="智能引用推荐")
+async def recommend_citations(
+    text: str,
+    cursor_position: Optional[int] = None,
+    top_k: int = 5,
+    user_id: str = Depends(get_current_user_id),
+):
+    """
+    基于文本上下文智能推荐引用文献
+
+    - 分析光标附近的上下文
+    - 返回最相关的文献推荐
+    - 包含推荐理由和相关度分数
+    """
+    from .recommendation_engine import get_recommendation_engine
+
+    engine = get_recommendation_engine()
+
+    recommendations = await engine.recommend(
+        text=text,
+        cursor_position=cursor_position,
+        user_id=user_id,
+        top_k=top_k,
+    )
+
+    return success_response(
+        data={
+            "recommendations": [r.to_dict() for r in recommendations],
+            "total": len(recommendations),
+        }
+    )
+
+
+@router.post("/recommend-for-paragraph", summary="为段落推荐引用")
+async def recommend_for_paragraph(
+    paragraph: str,
+    existing_citations: Optional[List[str]] = None,
+    top_k: int = 3,
+    user_id: str = Depends(get_current_user_id),
+):
+    """
+    为特定段落推荐引用
+
+    - 分析段落主题和内容类型
+    - 根据段落类型（方法/结果/讨论）调整推荐策略
+    - 避免推荐已存在的引用
+    """
+    from .recommendation_engine import get_recommendation_engine
+
+    engine = get_recommendation_engine()
+
+    recommendations = await engine.recommend_for_paragraph(
+        paragraph=paragraph,
+        existing_citations=existing_citations,
+        top_k=top_k,
+    )
+
+    return success_response(
+        data={
+            "recommendations": [r.to_dict() for r in recommendations],
+            "paragraph_type": engine._detect_paragraph_type(paragraph),
+        }
+    )
+
+
+@router.post("/analyze-citations", summary="分析引用质量")
+async def analyze_citations(
+    paper_id: str,
+    user_id: str = Depends(get_current_user_id),
+):
+    """
+    分析论文引用的质量分布
+
+    - 引用时效性分析
+    - 引用权威性分析
+    - 引用多样性分析
+    - 引用完整性检查
+    """
+    # TODO: 实现引用质量分析
+    return success_response(
+        data={
+            "paper_id": paper_id,
+            "total_citations": 0,
+            "quality_score": 0.0,
+            "timeliness_score": 0.0,
+            "authority_score": 0.0,
+            "diversity_score": 0.0,
+            "suggestions": [],
+            "message": "功能开发中",
+        }
+    )
 
 
 # 合并路由

@@ -1,0 +1,94 @@
+/* CitationCards 样式 */
+
+.citationCards {
+  margin-top: 8px;
+}
+
+.citationItem {
+  margin-bottom: 8px;
+  padding: 0 !important;
+}
+
+.citationCard {
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.citationCard:hover {
+  border-color: #1890ff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
+}
+
+.citationHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.citationIndex {
+  font-size: 12px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.citationTitle {
+  font-weight: 500;
+  font-size: 13px;
+  flex: 1;
+}
+
+.citationMeta {
+  margin-bottom: 8px;
+}
+
+.metaItem {
+  font-size: 12px;
+  color: #8c8c8c;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.relevanceTag {
+  font-size: 11px;
+  margin: 0;
+}
+
+.citationSnippet {
+  font-size: 12px;
+  color: #595959;
+  font-style: italic;
+  margin-bottom: 0 !important;
+}
+
+.expandButton {
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* 详情弹窗样式 */
+.citationDetail {
+  padding: 16px 0;
+}
+
+.detailMeta {
+  margin-top: 16px;
+  padding: 16px;
+  background: #f6ffed;
+  border-radius: 8px;
+}
+
+.detailSnippet {
+  margin-top: 16px;
+}
+
+.blockquote {
+  margin: 12px 0 0;
+  padding: 12px 16px;
+  background: #f6f8fa;
+  border-left: 4px solid #1890ff;
+  font-style: italic;
+  color: #595959;
+}

@@ -1,0 +1,44 @@
+ScholarForge 数据库迁移
+
+## 常用命令
+
+### 创建新迁移
+```bash
+cd backend
+alembic revision --autogenerate -m "描述信息"
+```
+
+### 升级到最新版本
+```bash
+alembic upgrade head
+```
+
+### 降级到指定版本
+```bash
+alembic downgrade <revision>
+```
+
+### 查看当前版本
+```bash
+alembic current
+```
+
+### 查看历史
+```bash
+alembic history
+```
+
+### 生成SQL脚本 (不执行)
+```bash
+alembic upgrade head --sql > migration.sql
+```
+
+## 环境变量
+
+配置数据库连接：
+- `DB_TYPE`: 数据库类型 (postgresql/mysql/sqlite)
+- `DB_HOST`: 主机地址
+- `DB_PORT`: 端口
+- `DB_NAME`: 数据库名
+- `DB_USER`: 用户名
+- `DB_PASSWORD`: 密码

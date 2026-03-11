@@ -1,0 +1,139 @@
+/**
+ * 导师协同审阅与批注样式
+ */
+
+.collaborativeReview {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* 统计概览 */
+.statsOverview {
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.progressSection {
+  margin-top: 16px;
+}
+
+/* 筛选器 */
+.filters {
+  margin-bottom: 16px;
+}
+
+/* 添加批注 */
+.addCommentSection {
+  margin-bottom: 16px;
+}
+
+.newCommentForm {
+  padding: 16px;
+  background: #f0f5ff;
+  border-radius: 8px;
+}
+
+/* 批注列表 */
+.commentsList {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.commentItem {
+  padding: 16px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.commentItem:hover {
+  background-color: #fafafa;
+}
+
+.commentContent {
+  width: 100%;
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.commentText {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.selectedText {
+  padding: 8px 12px;
+  background: #f6ffed;
+  border-left: 3px solid #52c41a;
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.reactions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.reaction {
+  padding: 2px 6px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.replies {
+  margin-top: 12px;
+  padding-left: 40px;
+  border-left: 2px solid #f0f0f0;
+}
+
+.reply {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.replyContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.replyInput {
+  margin-top: 12px;
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+/* 审阅者统计 */
+.reviewerStat {
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+/* 统计详情 */
+.statsDetail {
+  padding: 16px;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .commentHeader {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .replies {
+    padding-left: 20px;
+  }
+}

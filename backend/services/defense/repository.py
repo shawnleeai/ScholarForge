@@ -1,7 +1,8 @@
-/"""
+"""
 答辩准备数据访问层
 """
 
+import json
 import uuid
 from typing import List, Optional, Dict, Any
 from datetime import datetime
@@ -294,5 +295,13 @@ class DefenseMockRepository:
         await self.db.flush()
         return row is not None
 
-
-import json
+    async def get_session_answers(self, session_id: str) -> List[Dict[str, Any]]:
+        """获取会话的所有回答"""
+        query = text("""
+            SELECT * FROM defense_mock_answers
+            WHERE session_id = :session_id
+            ORDER BY created_at ASC
+        """)
+        result = await self.db.execute(query, {"session_id": session_id})
+        rows = result.fetchall()
+        return [dict(row._mapping) for row in rows] if rows else []

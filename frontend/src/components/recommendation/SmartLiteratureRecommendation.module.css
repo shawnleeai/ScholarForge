@@ -1,0 +1,111 @@
+/**
+ * 智能文献推荐与Word自动排版样式
+ */
+
+.smartRecommendation {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* 上下文输入区 */
+.contextSection {
+  margin-bottom: 16px;
+}
+
+.contextInput {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.contextControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* 格式设置区 */
+.formatSection {
+  padding: 8px 0;
+}
+
+/* 推荐列表 */
+.recommendationList {
+  min-height: 200px;
+}
+
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+}
+
+.recommendationItem {
+  padding: 16px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.recommendationItem:hover {
+  background-color: #fafafa;
+}
+
+.recommendationContent {
+  width: 100%;
+}
+
+.recommendationHeader {
+  margin-bottom: 12px;
+}
+
+.articleTitle {
+  font-size: 15px;
+  color: #1890ff;
+}
+
+.abstract {
+  color: #666;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.recommendationMeta {
+  margin-bottom: 8px;
+}
+
+.citationPreview {
+  padding: 8px 12px;
+  background: #f6ffed;
+  border-left: 3px solid #52c41a;
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 8px;
+}
+
+.bibliographyPreview {
+  padding: 12px;
+  background: #f0f5ff;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+/* 模板信息 */
+.templateInfo {
+  margin-top: 24px;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .contextControls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .recommendationItem :global(.ant-list-item-action) {
+    margin-left: 0;
+    margin-top: 12px;
+  }
+}

@@ -5,6 +5,7 @@ LLM 提供商抽象层
 向后兼容版本 - 使用 llm_provider_v2.py 中的增强实现
 """
 
+import logging
 from typing import Optional, List, Dict, Any
 
 # 从增强版导入所有核心类
@@ -19,10 +20,7 @@ from .llm_provider_v2 import (
     ProviderStatus,
 )
 
-# ChatGLMProvider 占位符（原类未实现）
-class ChatGLMProvider:
-    def __init__(self, api_key: str):
-        raise NotImplementedError("ChatGLMProvider 尚未实现")
+logger = logging.getLogger(__name__)
 
 
 # 保持向后兼容的 LLMService 类
@@ -47,9 +45,9 @@ class LLMService(LLMServiceV2):
             default_provider="openai",
             fallback_enabled=True,
         )
-        # 添加 ChatGLM 支持（如果在增强版中没有的话）
-        if chatglm_key and "chatglm" not in self.providers:
-            self.providers["chatglm"] = ChatGLMProvider(api_key=chatglm_key)
+        # ChatGLM 暂未实现，记录警告
+        if chatglm_key:
+            logger.warning("ChatGLMProvider 尚未实现，chatglm_key 将被忽略")
 
     async def generate(
         self,

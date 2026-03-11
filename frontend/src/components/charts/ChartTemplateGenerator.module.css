@@ -1,0 +1,91 @@
+/**
+ * 图表格式模板生成器样式
+ */
+
+.chartTemplateGenerator {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 模板卡片 */
+.templateCard {
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+}
+
+.templateCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.templateCard.selected {
+  border-color: #1890ff;
+  background: #e6f7ff;
+}
+
+/* 颜色预览 */
+.colorPreview {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.colorDot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #e0e0e0;
+}
+
+/* 颜色板 */
+.colorPalette {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.colorBlock {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+}
+
+/* 大颜色板 */
+.colorPaletteLarge {
+  display: flex;
+  gap: 4px;
+}
+
+.colorSwatch {
+  flex: 1;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+}
+
+/* 代码块 */
+.codeBlock {
+  background: #f6f8fa;
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .colorPaletteLarge {
+    flex-wrap: wrap;
+  }
+
+  .colorSwatch {
+    width: 40px;
+    flex: none;
+  }
+}

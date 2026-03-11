@@ -1,0 +1,168 @@
+# ScholarForge 生产环境部署配置
+# 使用 Nginx 作为反向代理, 多服务实例
+
+version: '3.8'
+
+services:
+  # Nginx 反向代理
+  nginx:
+    image: nginx:alpine
+    container_name: sf-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./deploy/nginx/ssl:/etc/nginx/ssl:ro
+      - frontend_build:/usr/share/nginx/html:ro
+    depends_on:
+      - gateway
+    networks:
+      - sf-production
+    restart: always
+
+  # API 网关
+  gateway:
+    image: scholarforge/gateway:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.gateway
+    environment:
+      - ENV=production
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_URL=${REDIS_URL}
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - redis
+    networks:
+      - sf-production
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+    restart: always
+
+  # AI 服务
+  ai-service:
+    image: scholarforge/ai-service:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE_NAME: ai
+    environment:
+      - ENV=production
+      - DB_HOST=${DB_HOST}
+      - REDIS_URL=${REDIS_URL}
+      - STEPFUN_API_KEY=${STEPFUN_API_KEY}
+      - QDRANT_URL=${QDRANT_URL}
+    networks:
+      - sf-production
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+    restart: always
+
+  # 文献服务
+  article-service:
+    image: scholarforge/article-service:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE_NAME: article
+    environment:
+      - ENV=production
+      - DB_HOST=${DB_HOST}
+      - REDIS_URL=${REDIS_URL}
+      - OSS_ACCESS_KEY=${OSS_ACCESS_KEY}
+      - OSS_SECRET_KEY=${OSS_SECRET_KEY}
+    volumes:
+      - article_storage:/app/storage
+    networks:
+      - sf-production
+    deploy:
+      replicas: 2
+    restart: always
+
+  # 推荐服务
+  recommendation-service:
+    image: scholarforge/recommendation-service:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE_NAME: recommendation
+    environment:
+      - ENV=production
+      - DB_HOST=${DB_HOST}
+      - REDIS_URL=${REDIS_URL}
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+    networks:
+      - sf-production
+    restart: always
+
+  # Celery Worker (异步任务)
+  celery-worker:
+    image: scholarforge/celery-worker:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.celery
+    environment:
+      - ENV=production
+      - DB_HOST=${DB_HOST}
+      - REDIS_URL=${REDIS_URL}
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+    depends_on:
+      - redis
+    networks:
+      - sf-production
+    deploy:
+      replicas: 2
+    restart: always
+
+  # Celery Beat (定时任务调度)
+  celery-beat:
+    image: scholarforge/celery-beat:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.celery
+    environment:
+      - ENV=production
+      - DB_HOST=${DB_HOST}
+      - REDIS_URL=${REDIS_URL}
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+    depends_on:
+      - redis
+    networks:
+      - sf-production
+    command: celery -A shared.tasks beat --loglevel=info
+    restart: always
+
+  # Redis
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    networks:
+      - sf-production
+    restart: always
+
+volumes:
+  frontend_build:
+  article_storage:
+  redis_data:
+
+networks:
+  sf-production:
+    driver: bridge

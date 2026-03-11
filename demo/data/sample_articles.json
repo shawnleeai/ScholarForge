@@ -1,0 +1,86 @@
+[
+  {
+    "id": "article-001",
+    "title": "A Unified Framework for Human-Agent Collaboration",
+    "authors": [{"name": "Microsoft Research"}],
+    "abstract": "本研究提出了人-Agent协作的统一框架，系统阐述了协作的认知模型和交互机制。",
+    "journal": "Microsoft Research Technical Report",
+    "year": 2025,
+    "doi": "10.1234/msr.2025.001",
+    "keywords": ["Human-Agent Collaboration", "LLM", "Cognitive Model"],
+    "citation_count": 156,
+    "relevance_score": 5
+  },
+  {
+    "id": "article-002",
+    "title": "Towards fluid human-agent collaboration: From dynamic goal recognition to adaptive agent policy",
+    "authors": [{"name": "Chiari, M."}, {"name": "Paxton, C."}],
+    "abstract": "研究了动态人-Agent协作，提出了fluid collaboration的概念。",
+    "journal": "Frontiers in Robotics and AI",
+    "year": 2025,
+    "doi": "10.3389/frobt.2025.1532693",
+    "keywords": ["Human-Agent Collaboration", "Adaptive Policy"],
+    "citation_count": 89,
+    "relevance_score": 5
+  },
+  {
+    "id": "article-003",
+    "title": "Agent2Agent Protocol: A New Era of Agent Interoperability",
+    "authors": [{"name": "Google Research"}],
+    "abstract": "A2A协议允许AI Agent之间相互通信、安全交换信息。",
+    "journal": "Google Research Blog",
+    "year": 2025,
+    "doi": "10.1234/google.2025.a2a",
+    "keywords": ["Agent Protocol", "Interoperability", "Multi-Agent"],
+    "citation_count": 234,
+    "relevance_score": 4
+  },
+  {
+    "id": "article-004",
+    "title": "Multi-Agent Collaboration via Cross-Team Orchestration",
+    "authors": [{"name": "Khan, A."}, {"name": "Zhang, Y."}],
+    "abstract": "提出了跨团队的多Agent协作框架。",
+    "journal": "ACL Findings",
+    "year": 2025,
+    "doi": "10.1234/acl.2025.8765",
+    "keywords": ["Multi-Agent", "Orchestration", "Collaboration"],
+    "citation_count": 78,
+    "relevance_score": 5
+  },
+  {
+    "id": "article-005",
+    "title": "Shaping the Future of Project Management With AI",
+    "authors": [{"name": "PMI"}],
+    "abstract": "PMI报告分析了AI对项目管理的影响。",
+    "journal": "PMI Research Report",
+    "year": 2025,
+    "doi": "10.1234/pmi.2025.ai",
+    "keywords": ["Project Management", "AI", "Future of Work"],
+    "citation_count": 312,
+    "relevance_score": 5
+  },
+  {
+    "id": "article-006",
+    "title": "Reflective Multi-Agent Collaboration based on Large Language Models",
+    "authors": [{"name": "NeurIPS 2024"}],
+    "abstract": "提出了反射式多Agent协作机制，可将任务完成准确率提升25%。",
+    "journal": "NeurIPS 2024 Proceedings",
+    "year": 2024,
+    "doi": "10.1234/neurips.2024.refl",
+    "keywords": ["Multi-Agent", "Reflection", "LLM"],
+    "citation_count": 445,
+    "relevance_score": 5
+  },
+  {
+    "id": "article-007",
+    "title": "LLM-Based Human-Agent Collaboration and Interaction Systems: A Survey",
+    "authors": [{"name": "Li, X."}, {"name": "Wang, J."}],
+    "abstract": "本研究提供了LLM-HAS的首个全面综述，人-Agent协作可提升软件工程效率30-50%。",
+    "journal": "IEEE Transactions on Software Engineering",
+    "year": 2024,
+    "doi": "10.1109/tse.2024.001",
+    "keywords": ["LLM", "Human-Agent Collaboration", "Survey"],
+    "citation_count": 567,
+    "relevance_score": 5
+  }
+]

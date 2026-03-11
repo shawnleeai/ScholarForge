@@ -6,7 +6,7 @@
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
 // 后端响应格式
-interface ApiResponse<T = unknown> {
+export interface ApiResponse<T = unknown> {
   code: number
   message: string
   data: T

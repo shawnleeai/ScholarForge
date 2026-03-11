@@ -1,0 +1,63 @@
+.qualityPanel {
+  width: 100%;
+}
+
+.overviewSection {
+  padding: 16px 0;
+}
+
+.statCard {
+  text-align: center;
+}
+
+.metricsCard {
+  margin-top: 24px;
+}
+
+.metricItem {
+  padding: 12px;
+}
+
+.metricLabel {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.distributionCard {
+  margin-top: 24px;
+}
+
+.distributionItem {
+  padding: 12px;
+}
+
+.citationListItem {
+  padding: 16px;
+  transition: background 0.3s;
+}
+
+.citationListItem:hover {
+  background: #fafafa;
+}
+
+.detailPanel {
+  margin-top: 16px;
+}
+
+.scoreDetail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+}
+
+.metricsDetail {
+  margin-top: 16px;
+}
+
+.metricDetailItem {
+  padding: 8px;
+}

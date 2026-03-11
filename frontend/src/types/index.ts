@@ -158,6 +158,21 @@ export interface LibraryFolder {
 
 export type WritingTaskType = 'continue' | 'rewrite' | 'polish' | 'expand' | 'summarize' | 'translate'
 
+export interface Citation {
+  id: string
+  title: string
+  authors: string[]
+  journal?: string
+  year?: number
+  doi?: string
+  url?: string
+  abstract?: string
+  source?: string
+  similarity?: number
+  relevance_score?: number
+  snippet?: string
+}
+
 export interface WritingRequest {
   taskType: WritingTaskType
   text?: string

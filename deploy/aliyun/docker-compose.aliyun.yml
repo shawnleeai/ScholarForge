@@ -1,0 +1,135 @@
+# 阿里云生产环境部署配置
+# 使用阿里云RDS、Redis、OSS服务
+
+version: '3.8'
+
+services:
+  # API 网关
+  gateway:
+    image: registry.cn-hangzhou.aliyuncs.com/scholarforge/gateway:latest
+    container_name: sf-gateway
+    environment:
+      - ENV=production
+      - DB_TYPE=postgresql
+      - DB_HOST=${ALIYUN_DB_HOST}
+      - DB_PORT=5432
+      - DB_NAME=scholarforge
+      - DB_USER=${ALIYUN_DB_USER}
+      - DB_PASSWORD=${ALIYUN_DB_PASSWORD}
+      - DB_SSL_MODE=require
+      - REDIS_URL=${ALIYUN_REDIS_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - OSS_ENDPOINT=${ALIYUN_OSS_ENDPOINT}
+      - OSS_ACCESS_KEY_ID=${ALIYUN_ACCESS_KEY_ID}
+      - OSS_ACCESS_KEY_SECRET=${ALIYUN_ACCESS_KEY_SECRET}
+      - OSS_BUCKET=${ALIYUN_OSS_BUCKET}
+    ports:
+      - "8000:8000"
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+
+  # AI 服务
+  ai-service:
+    image: registry.cn-hangzhou.aliyuncs.com/scholarforge/ai-service:latest
+    environment:
+      - ENV=production
+      - DB_TYPE=postgresql
+      - DB_HOST=${ALIYUN_DB_HOST}
+      - DB_PORT=5432
+      - DB_NAME=scholarforge
+      - DB_USER=${ALIYUN_DB_USER}
+      - DB_PASSWORD=${ALIYUN_DB_PASSWORD}
+      - DB_SSL_MODE=require
+      - REDIS_URL=${ALIYUN_REDIS_URL}
+      - STEPFUN_API_KEY=${STEPFUN_API_KEY}
+      - DASHSCOPE_API_KEY=${DASHSCOPE_API_KEY}
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    restart: always
+
+  # 文献服务
+  article-service:
+    image: registry.cn-hangzhou.aliyuncs.com/scholarforge/article-service:latest
+    environment:
+      - ENV=production
+      - DB_TYPE=postgresql
+      - DB_HOST=${ALIYUN_DB_HOST}
+      - DB_PORT=5432
+      - DB_NAME=scholarforge
+      - DB_USER=${ALIYUN_DB_USER}
+      - DB_PASSWORD=${ALIYUN_DB_PASSWORD}
+      - DB_SSL_MODE=require
+      - REDIS_URL=${ALIYUN_REDIS_URL}
+      - OSS_ENDPOINT=${ALIYUN_OSS_ENDPOINT}
+      - OSS_ACCESS_KEY_ID=${ALIYUN_ACCESS_KEY_ID}
+      - OSS_ACCESS_KEY_SECRET=${ALIYUN_ACCESS_KEY_SECRET}
+      - OSS_BUCKET=${ALIYUN_OSS_BUCKET}
+      - CNKI_API_KEY=${CNKI_API_KEY}
+    deploy:
+      replicas: 2
+    restart: always
+
+  # 推荐服务 (含每日论文推荐)
+  recommendation-service:
+    image: registry.cn-hangzhou.aliyuncs.com/scholarforge/recommendation-service:latest
+    environment:
+      - ENV=production
+      - DB_TYPE=postgresql
+      - DB_HOST=${ALIYUN_DB_HOST}
+      - DB_PORT=5432
+      - DB_NAME=scholarforge
+      - DB_USER=${ALIYUN_DB_USER}
+      - DB_PASSWORD=${ALIYUN_DB_PASSWORD}
+      - REDIS_URL=${ALIYUN_REDIS_URL}
+      - CELERY_BROKER_URL=${ALIYUN_REDIS_URL}
+      - ARXIV_API_RATE_LIMIT=3
+      - SEMANTIC_SCHOLAR_API_KEY=${SEMANTIC_SCHOLAR_API_KEY}
+    deploy:
+      replicas: 1
+    restart: always
+
+  # Celery Worker (异步任务)
+  celery-worker:
+    image: registry.cn-hangzhou.aliyuncs.com/scholarforge/celery-worker:latest
+    environment:
+      - ENV=production
+      - DB_TYPE=postgresql
+      - DB_HOST=${ALIYUN_DB_HOST}
+      - DB_PORT=5432
+      - DB_NAME=scholarforge
+      - DB_USER=${ALIYUN_DB_USER}
+      - DB_PASSWORD=${ALIYUN_DB_PASSWORD}
+      - REDIS_URL=${ALIYUN_REDIS_URL}
+      - CELERY_BROKER_URL=${ALIYUN_REDIS_URL}
+    deploy:
+      replicas: 2
+    restart: always
+
+  # Celery Beat (定时任务)
+  celery-beat:
+    image: registry.cn-hangzhou.aliyuncs.com/scholarforge/celery-beat:latest
+    environment:
+      - ENV=production
+      - DB_TYPE=postgresql
+      - DB_HOST=${ALIYUN_DB_HOST}
+      - DB_PORT=5432
+      - DB_NAME=scholarforge
+      - DB_USER=${ALIYUN_DB_USER}
+      - DB_PASSWORD=${ALIYUN_DB_PASSWORD}
+      - REDIS_URL=${ALIYUN_REDIS_URL}
+      - CELERY_BROKER_URL=${ALIYUN_REDIS_URL}
+    restart: always

@@ -1,0 +1,129 @@
+.container {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.feedCard {
+  min-height: 800px;
+}
+
+.feedHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.feedTabs {
+  margin-bottom: 16px;
+}
+
+.feedList {
+  min-height: 400px;
+}
+
+.feedItem {
+  padding: 20px 0;
+}
+
+.feedContent {
+  margin-top: 12px;
+}
+
+.contentText {
+  margin-bottom: 12px !important;
+}
+
+.timeText {
+  font-size: 13px;
+}
+
+.targetCard {
+  background: #f8f9fa;
+  margin-top: 12px;
+}
+
+.targetTitle {
+  font-weight: 500;
+  color: #1890ff;
+  margin-bottom: 4px;
+}
+
+.targetMeta {
+  font-size: 12px;
+  color: #666;
+}
+
+.commentSection {
+  margin-top: 16px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.commentActions {
+  margin-top: 8px;
+  justify-content: flex-end;
+}
+
+.loadMore {
+  text-align: center;
+  padding: 24px 0;
+}
+
+.sideCard {
+  margin-bottom: 24px;
+}
+
+.topicItem {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.topicRank {
+  width: 24px;
+  height: 24px;
+  background: #f0f0f0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  margin-right: 12px;
+}
+
+.topicItem:nth-child(1) .topicRank {
+  background: #ff4d4f;
+  color: white;
+}
+
+.topicItem:nth-child(2) .topicRank {
+  background: #ff7a45;
+  color: white;
+}
+
+.topicItem:nth-child(3) .topicRank {
+  background: #ffa940;
+  color: white;
+}
+
+.topicInfo {
+  flex: 1;
+}
+
+.topicName {
+  font-weight: 500;
+}
+
+.topicStats {
+  font-size: 12px;
+  color: #999;
+  margin-top: 2px;
+}
+
+.userItem {
+  padding: 12px 0;
+}

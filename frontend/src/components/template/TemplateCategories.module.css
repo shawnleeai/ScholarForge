@@ -1,0 +1,59 @@
+.categoriesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.quickNav {
+  background: #fff;
+}
+
+.menu {
+  border-right: none !important;
+}
+
+.filterCard {
+  background: #fff;
+}
+
+.filterCollapse {
+  background: transparent;
+}
+
+.filterCollapse :global(.ant-collapse-header) {
+  padding: 8px 0 !important;
+}
+
+.filterCollapse :global(.ant-collapse-content-box) {
+  padding: 8px 0 !important;
+}
+
+.filterGroup {
+  width: 100%;
+}
+
+.tagsFilter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sortCard {
+  background: #fff;
+}
+
+.sortGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sortGroup :global(.ant-radio-button-wrapper) {
+  flex: 1;
+  min-width: 80px;
+  text-align: center;
+}
+
+.activeFilters {
+  background: #f6ffed;
+}

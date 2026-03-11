@@ -1,0 +1,132 @@
+.permissionPage {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.permissionPageHeader {
+  margin-bottom: 24px;
+}
+
+.permissionPageTitle {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.permissionPageSubtitle {
+  color: #666;
+  font-size: 14px;
+}
+
+.statsCard {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 20px;
+  color: white;
+  border: none;
+}
+
+.statsCard :global(.ant-card-body) {
+  padding: 0;
+}
+
+.statsCard :global(.ant-statistic-title) {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+}
+
+.statsCard :global(.ant-statistic-content) {
+  color: white;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.statsCardLabel {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-top: 4px;
+}
+
+.permissionTabs :global(.ant-tabs-nav) {
+  margin-bottom: 16px;
+}
+
+.permissionTabs :global(.ant-tabs-tab) {
+  padding: 12px 24px;
+  font-weight: 500;
+  background: #f5f5f5;
+  border-radius: 8px 8px 0 0;
+  margin-right: 8px;
+  transition: all 0.3s;
+}
+
+.permissionTabs :global(.ant-tabs-tab:hover) {
+  background: #e8e8e8;
+}
+
+.permissionTabs :global(.ant-tabs-tab-active) {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.permissionTabs :global(.ant-tabs-tab-active .ant-tabs-tab-btn) {
+  color: white !important;
+}
+
+.permissionHelp {
+  padding: 16px;
+}
+
+.permissionHelp h4 {
+  margin-bottom: 16px;
+  font-size: 16px;
+  color: #333;
+}
+
+.permissionHelp ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.permissionHelp li {
+  padding: 8px 0;
+  border-bottom: 1px dashed #f0f0f0;
+  color: #666;
+}
+
+.permissionHelp li:last-child {
+  border-bottom: none;
+}
+
+.permissionHelp li strong {
+  color: #333;
+  display: inline-block;
+  width: 100px;
+}
+
+/* 响应式样式 */
+@media (max-width: 768px) {
+  .permissionPage {
+    padding: 12px;
+  }
+
+  .permissionPageTitle {
+    font-size: 22px;
+  }
+
+  .statsCard {
+    margin-bottom: 16px;
+  }
+
+  .permissionTabs :global(.ant-tabs-tab) {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+}

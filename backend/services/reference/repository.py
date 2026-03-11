@@ -12,6 +12,35 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 
+# 允许的列名白名单（防止SQL注入）
+ALLOWED_REFERENCE_COLUMNS = {
+    'id', 'user_id', 'paper_id', 'folder_id', 'doi', 'title', 'authors',
+    'abstract', 'keywords', 'journal_name', 'publication_year', 'publication_type',
+    'volume', 'issue', 'pages', 'publisher', 'url', 'source_db', 'source_id',
+    'rating', 'notes', 'tags', 'is_important', 'is_read', 'status',
+    'added_at', 'updated_at', 'last_accessed_at', 'citation_count', 'language'
+}
+
+ALLOWED_FOLDER_COLUMNS = {
+    'id', 'user_id', 'name', 'description', 'parent_id', 'sort_order',
+    'created_at', 'updated_at'
+}
+
+ALLOWED_TASK_COLUMNS = {
+    'id', 'user_id', 'paper_id', 'source_type', 'file_name', 'file_path',
+    'status', 'total_count', 'success_count', 'failed_count', 'error_message',
+    'created_at', 'completed_at', 'result_data'
+}
+
+
+def _validate_columns(columns: List[str], allowed: set) -> List[str]:
+    """验证列名是否在白名单中"""
+    invalid = set(columns) - allowed
+    if invalid:
+        raise ValueError(f"Invalid columns: {invalid}")
+    return columns
+
+
 class ReferenceRepository:
     """参考文献数据仓库"""
 
@@ -20,8 +49,6 @@ class ReferenceRepository:
 
     async def create(self, reference_data: Dict[str, Any]) -> Dict[str, Any]:
         """创建参考文献"""
-        from backend.shared.database import references_table
-
         # 确保ID存在
         if 'id' not in reference_data:
             reference_data['id'] = str(uuid.uuid4())
@@ -31,9 +58,8 @@ class ReferenceRepository:
         reference_data['added_at'] = now
         reference_data['updated_at'] = now
 
-        # 构建插入语句
-        columns = list(reference_data.keys())
-        values = [reference_data[col] for col in columns]
+        # 过滤并验证列名（防止SQL注入）
+        columns = _validate_columns(list(reference_data.keys()), ALLOWED_REFERENCE_COLUMNS)
         placeholders = [f":{col}" for col in columns]
 
         query = text(f"""
@@ -82,8 +108,9 @@ class ReferenceRepository:
 
         update_data['updated_at'] = datetime.utcnow()
 
-        # 构建SET语句
-        set_clause = ', '.join([f"{k} = :{k}" for k in update_data.keys()])
+        # 验证列名（防止SQL注入）
+        columns = _validate_columns(list(update_data.keys()), ALLOWED_REFERENCE_COLUMNS)
+        set_clause = ', '.join([f"{k} = :{k}" for k in columns])
 
         query = text(f"""
             UPDATE references_table
@@ -458,7 +485,8 @@ class ReferenceFolderRepository:
         folder_data['created_at'] = datetime.utcnow()
         folder_data['updated_at'] = datetime.utcnow()
 
-        columns = list(folder_data.keys())
+        # 验证列名（防止SQL注入）
+        columns = _validate_columns(list(folder_data.keys()), ALLOWED_FOLDER_COLUMNS)
         placeholders = [f":{col}" for col in columns]
 
         query = text(f"""
@@ -509,7 +537,9 @@ class ReferenceFolderRepository:
         update_data.pop('created_at', None)
         update_data['updated_at'] = datetime.utcnow()
 
-        set_clause = ', '.join([f"{k} = :{k}" for k in update_data.keys()])
+        # 验证列名（防止SQL注入）
+        columns = _validate_columns(list(update_data.keys()), ALLOWED_FOLDER_COLUMNS)
+        set_clause = ', '.join([f"{k} = :{k}" for k in columns])
 
         query = text(f"""
             UPDATE reference_folders
@@ -554,7 +584,8 @@ class ImportTaskRepository:
 
         task_data['created_at'] = datetime.utcnow()
 
-        columns = list(task_data.keys())
+        # 验证列名（防止SQL注入）
+        columns = _validate_columns(list(task_data.keys()), ALLOWED_TASK_COLUMNS)
         placeholders = [f":{col}" for col in columns]
 
         query = text(f"""
@@ -592,7 +623,9 @@ class ImportTaskRepository:
         if status in ['completed', 'failed']:
             updates['completed_at'] = datetime.utcnow()
 
-        set_clause = ', '.join([f"{k} = :{k}" for k in updates.keys()])
+        # 验证列名（防止SQL注入）
+        columns = _validate_columns(list(updates.keys()), ALLOWED_TASK_COLUMNS)
+        set_clause = ', '.join([f"{k} = :{k}" for k in columns])
 
         query = text(f"""
             UPDATE reference_import_tasks

@@ -1,0 +1,73 @@
+/**
+ * 文献深度解析助手样式
+ */
+
+.literatureDeepAnalysis {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* 输入区域 */
+.inputSection {
+  padding: 8px;
+}
+
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  margin-top: 24px;
+}
+
+/* 概览区域 */
+.overview {
+  padding: 8px;
+}
+
+.actions {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #f0f0f0;
+}
+
+/* 分析卡片 */
+.analysisCard {
+  margin-bottom: 16px;
+}
+
+.analysisCard :global(.ant-card-head) {
+  background: #fafafa;
+}
+
+.highlights {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed #e8e8e8;
+}
+
+/* 关键发现 */
+.findingHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 结果标签页 */
+.resultsTabs {
+  margin-top: 16px;
+}
+
+.resultsTabs :global(.ant-tabs-content) {
+  padding: 16px 0;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .findingHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

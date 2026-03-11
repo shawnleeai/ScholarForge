@@ -48,9 +48,9 @@ const mockDailyRecommendations: RecommendationItem[] = [
       id: 'r1',
       title: '人工智能在项目管理中的应用研究',
       abstract: '本文探讨了人工智能技术在项目管理领域的应用...',
-      authors: ['张三', '李四'],
-      source: '管理科学学报',
-      publishYear: 2024,
+      authors: [{ name: '张三' }, { name: '李四' }],
+      sourceName: '管理科学学报',
+      publicationYear: 2024,
       keywords: ['人工智能', '项目管理', '机器学习'],
       citationCount: 45,
     },
@@ -64,9 +64,9 @@ const mockDailyRecommendations: RecommendationItem[] = [
       id: 'r2',
       title: '基于深度学习的工程管理优化方法',
       abstract: '深度学习技术在工程管理中的应用日益广泛...',
-      authors: ['王五', '赵六'],
-      source: '系统工程理论与实践',
-      publishYear: 2024,
+      authors: [{ name: '王五' }, { name: '赵六' }],
+      sourceName: '系统工程理论与实践',
+      publicationYear: 2024,
       keywords: ['深度学习', '工程管理', '优化'],
       citationCount: 32,
     },
@@ -80,9 +80,9 @@ const mockDailyRecommendations: RecommendationItem[] = [
       id: 'r3',
       title: 'Machine Learning for Project Risk Prediction',
       abstract: 'This paper presents a machine learning approach...',
-      authors: ['John Smith', 'Jane Doe'],
-      source: 'Journal of Construction Engineering',
-      publishYear: 2023,
+      authors: [{ name: 'John Smith' }, { name: 'Jane Doe' }],
+      sourceName: 'Journal of Construction Engineering',
+      publicationYear: 2023,
       keywords: ['Machine Learning', 'Risk Prediction', 'Project Management'],
       citationCount: 78,
     },
@@ -197,3 +197,116 @@ export const recommendationService = {
 }
 
 export default recommendationService
+
+// 增强版推荐服务（新API）
+export interface RecommendedPaper {
+  id: string
+  title: string
+  authors: string[]
+  abstract: string
+  publication_year?: number
+  source_name: string
+  citation_count?: number
+  relevance_score: number
+  recommendation_reason: string
+  recommendation_type: 'content_based' | 'collaborative' | 'trending' | 'recent' | 'related' | 'citation_based'
+  pdf_url?: string
+  source_url?: string
+}
+
+export interface RecommendationFeedback {
+  paper_id: string
+  feedback: 'like' | 'dislike' | 'neutral'
+  reason?: string
+}
+
+export interface RecommendationSettings {
+  research_interests: string[]
+  preferred_sources: string[]
+  exclude_read: boolean
+  min_citation_count?: number
+  year_range?: {
+    start: number
+    end: number
+  }
+}
+
+export const enhancedRecommendationService = {
+  /**
+   * 获取个性化推荐
+   */
+  async getPersonalizedRecommendations(
+    limit: number = 10
+  ): Promise<RecommendedPaper[]> {
+    const response = await request.get<RecommendedPaper[]>(
+      '/recommendations/personalized',
+      { limit }
+    )
+    return response.data
+  },
+
+  /**
+   * 获取相关论文推荐
+   */
+  async getRelatedPapers(
+    paperId: string,
+    limit: number = 10
+  ): Promise<RecommendedPaper[]> {
+    const response = await request.get<RecommendedPaper[]>(
+      `/recommendations/related/${paperId}`,
+      { limit }
+    )
+    return response.data
+  },
+
+  /**
+   * 获取热门论文
+   */
+  async getTrendingPapers(limit: number = 10): Promise<RecommendedPaper[]> {
+    const response = await request.get<RecommendedPaper[]>(
+      '/recommendations/trending',
+      { limit }
+    )
+    return response.data
+  },
+
+  /**
+   * 提交推荐反馈
+   */
+  async submitFeedback(
+    feedback: RecommendationFeedback
+  ): Promise<void> {
+    await request.post('/recommendations/feedback', feedback)
+  },
+
+  /**
+   * 获取推荐设置
+   */
+  async getSettings(): Promise<RecommendationSettings> {
+    const response = await request.get<RecommendationSettings>(
+      '/recommendations/settings'
+    )
+    return response.data
+  },
+
+  /**
+   * 更新推荐设置
+   */
+  async updateSettings(
+    settings: RecommendationSettings
+  ): Promise<void> {
+    await request.put('/recommendations/settings', settings)
+  },
+
+  /**
+   * 解释推荐原因
+   */
+  async explainRecommendation(
+    paperId: string
+  ): Promise<{ explanation: string }> {
+    const response = await request.get<{ explanation: string }>(
+      `/recommendations/explain/${paperId}`
+    )
+    return response.data
+  },
+}

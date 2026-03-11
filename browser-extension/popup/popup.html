@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScholarForge - 学术助手</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- 头部 -->
+    <header class="popup-header">
+      <div class="logo">
+        <span class="logo-icon">📚</span>
+        <span class="logo-text">ScholarForge</span>
+      </div>
+      <div class="version">v1.0.0</div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main class="popup-content">
+      <!-- 当前页面信息 -->
+      <section class="page-info" id="page-info">
+        <div class="info-title">当前页面</div>
+        <div class="page-title" id="page-title">加载中...</div>
+        <div class="page-url" id="page-url"></div>
+      </section>
+
+      <!-- 快速操作 -->
+      <section class="quick-actions">
+        <div class="actions-title">快速操作</div>
+        <div class="actions-grid">
+          <button class="action-btn primary" id="import-btn">
+            <span class="action-icon">📥</span>
+            <span class="action-text">导入文献</span>
+          </button>
+          <button class="action-btn" id="note-btn">
+            <span class="action-icon">📝</span>
+            <span class="action-text">添加笔记</span>
+          </button>
+          <button class="action-btn" id="cite-btn">
+            <span class="action-icon">📋</span>
+            <span class="action-text">复制引用</span>
+          </button>
+          <button class="action-btn" id="sidebar-btn">
+            <span class="action-icon">📖</span>
+            <span class="action-text">侧边栏</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 导入状态 -->
+      <section class="import-status" id="import-status" style="display: none;">
+        <div class="status-indicator">
+          <div class="spinner"></div>
+          <span class="status-text">正在导入...</span>
+        </div>
+      </section>
+
+      <!-- 最近导入 -->
+      <section class="recent-imports">
+        <div class="section-header">
+          <span class="section-title">最近导入</span>
+          <button class="view-all-btn" id="view-all-btn">查看全部 →</button>
+        </div>
+        <div class="imports-list" id="imports-list">
+          <div class="empty-state">暂无导入记录</div>
+        </div>
+      </section>
+
+      <!-- 快捷功能 -->
+      <section class="shortcuts">
+        <div class="shortcuts-title">快捷键</div>
+        <div class="shortcuts-list">
+          <div class="shortcut-item">
+            <span class="shortcut-key">Ctrl+Shift+S</span>
+            <span class="shortcut-desc">切换侧边栏</span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-key">Ctrl+Shift+I</span>
+            <span class="shortcut-desc">快速导入</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- 底部 -->
+    <footer class="popup-footer">
+      <button class="footer-btn" id="settings-btn">
+        <span>⚙️</span> 设置
+      </button>
+      <button class="footer-btn" id="help-btn">
+        <span>❓</span> 帮助
+      </button>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

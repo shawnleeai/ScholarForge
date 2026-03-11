@@ -20,6 +20,10 @@ import {
   FormatPainterOutlined,
   LinkOutlined,
   TrophyOutlined,
+  FileSyncOutlined,
+  BarChartOutlined,
+  FireOutlined,
+  ThunderboltOutlined,
 } from '@ant-design/icons'
 import styles from './Sidebar.module.css'
 
@@ -40,10 +44,12 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
     if (path.startsWith('/papers')) return '/papers'
     if (path.startsWith('/library/search')) return '/library/search'
     if (path.startsWith('/library')) return '/library'
+    if (path.startsWith('/daily')) return '/daily'
     if (path.startsWith('/references')) return '/references'
     if (path.startsWith('/plagiarism')) return '/plagiarism'
     if (path.startsWith('/format')) return '/format'
     if (path.startsWith('/defense')) return '/defense'
+    if (path.startsWith('/ai-agent')) return '/ai-agent'
     if (path.startsWith('/settings')) return '/settings'
     return '/dashboard'
   }
@@ -70,6 +76,21 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
       label: '文献搜索',
     },
     {
+      key: '/daily',
+      icon: <FireOutlined style={{ color: '#ff4d4f' }} />,
+      label: '每日论文',
+    },
+    {
+      key: '/ai-agent',
+      icon: <ThunderboltOutlined style={{ color: '#722ed1' }} />,
+      label: 'AI科研助手',
+    },
+    {
+      key: '/review',
+      icon: <FileSyncOutlined />,
+      label: '文献综述',
+    },
+    {
       key: '/topic',
       icon: <BulbOutlined />,
       label: '选题助手',
@@ -83,6 +104,11 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
       key: '/knowledge',
       icon: <ShareAltOutlined />,
       label: '知识图谱',
+    },
+    {
+      key: '/analytics',
+      icon: <BarChartOutlined />,
+      label: '学术影响力',
     },
     {
       key: '/journal',
